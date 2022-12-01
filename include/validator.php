@@ -6,3 +6,4 @@ if(isset($_POST['login'])){
 
 }
 ob_flush();
+?>
