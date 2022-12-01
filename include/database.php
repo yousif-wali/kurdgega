@@ -20,9 +20,14 @@ class DB{
 /*  Creating a bridge to some queries in the Database */
 class Shoppers extends DB{
     public function insert($fName, $lName, $username, $email, $pwd, $dob, $phone, $gender, $address){
+        try{
         $ip = $_SERVER['REMOTE_ADDR'];
         mysqli_query($this->connect(), "INSERT INTO shoppers (fName, lName, username, email, pwd, dob, ip, phone, gender, address, lasLogin) values 
         ('$fName', '$lName', '$username', '$email', '$pwd' ,'$dob', '$ip', '$phone', '$gender', '$address', 'NOW()')");
+        return "signed up";
+        }catch(Exception $e){
+            return "not signed up";
+        }
     }
     public function deleteUser($username){
         mysqli_query($this->connect, "DELETE FROM shoppers WHERE username = '$username'");
@@ -53,9 +58,9 @@ class Login extends DB{
             while($row = mysqli_fetch_assoc($result)){
                 $_SESSION['username'] = $row["username"];
             }
-            return "connected";
+            return "logged in";
         }else{
-            return "not connected";
+            return "not logged in";
         }
     }
 }
