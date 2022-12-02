@@ -130,6 +130,10 @@ CREATE TABLE `shoppers` (
   `lastLogin` datetime NOT NULL DEFAULT current_timestamp(),
   `factor_auth` int(7) unsigned NOT NULL,
   `blocked` tinyint(1) NOT NULL DEFAULT 0,
+  `city` varchar(100) NOT NULL,
+  `state` varchar(200) NOT NULL,
+  `country` varchar(200) NOT NULL,
+  `vip` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`User_ID`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`) USING HASH
@@ -154,4 +158,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-30 20:24:39
+-- Dump completed on 2022-12-02  7:39:36
