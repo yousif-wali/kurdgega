@@ -1,1 +1,8 @@
-
+*{
+    margin:0;
+    padding:0;
+}
+main{
+    width:100vw;
+    margin-top:60px;
+}

@@ -4,6 +4,8 @@ class DB{
     private $connect;
     protected function connect(){
         $this->connect = mysqli_connect("localhost", "root", "", "kurdgega");
+    }
+    public function getConnect(){
         return $this->connect;
     }
     public function __construct(){
@@ -17,50 +19,119 @@ class DB{
         return password_hash($text, PASSWORD_BCRYPT, $opts03);
     }
 }
-/*  Creating a bridge to some queries in the Database */
-class Shoppers extends DB{
-    public function insert($fName, $lName, $username, $email, $pwd, $dob, $phone, $gender, $address){
-        try{
-        $ip = $_SERVER['REMOTE_ADDR'];
-        mysqli_query($this->connect(), "INSERT INTO shoppers (fName, lName, username, email, pwd, dob, ip, phone, gender, address, lasLogin) values 
-        ('$fName', '$lName', '$username', '$email', '$pwd' ,'$dob', '$ip', '$phone', '$gender', '$address', 'NOW()')");
-        return "signed up";
-        }catch(Exception $e){
-            return "not signed up";
-        }
-    }
-    public function deleteUser($username){
-        mysqli_query($this->connect, "DELETE FROM shoppers WHERE username = '$username'");
-    }
-    public function updatePassword($username, $pwd){
-        mysqli_query($this->connect, "UPDATE shopper SET pwd = '$pwd' WHERE username = '$username'");
-    }
-    public function promote($username){
-        mysqli_query($this->connect, "UPDATE shopper SET isAdmin = 1 WHERE username = '$username'");
-    }
-    public function demote($username){
-        mysqli_query($this->connect, "UPDATE shopper SET isAdmin = 0 WHERE username = '$username'");
-    }
-    public function updatePhone($username, $phone){
-        mysqli_query($this->connect, "UPDATE shopper SET phone = '$phone' WHERE username = '$username'");
-    }
-    public function updateAddress($username, $address){
-        mysqli_query($this->connect, "UPDATE shopper SET address = '$address' WHERE username = '$username'");
-    }
-}
 /*  Creating Login Class*/
 class Login extends DB{
-    public function __construct($cred, $pwd){
-        $result =mysqli_query($this->connect, "select * from shoppers where email = '$cred' OR username = '$cred' OR phone = '$cred' ");
+    private $name;
+    private $pwd;
+    public function __construct($_name, $_pwd){
+        $this->connect();
+        $this->name = mysqli_real_escape_string($this->getConnect(), $_name);
+        $this->pwd = mysqli_real_escape_string($this->getConnect(), $_pwd);
+    }
+    public function login(){
+        $this->connect();
+        $result =mysqli_query($this->getConnect(), "SELECT * from shoppers where email = '$this->name' OR username = '$this->name' OR phone = '$this->name' ");
         $possiblePwd = mysqli_fetch_assoc($result)["pwd"];
-        if(password_verify($pwd, $possiblePwd)){
+        if(password_verify($this->pwd, $possiblePwd)){
             session_start();
-            while($row = mysqli_fetch_assoc($result)){
-                $_SESSION['username'] = $row["username"];
+            $tar =mysqli_query($this->getConnect(), "SELECT * from shoppers where email = '$this->name' OR username = '$this->name' OR phone = '$this->name' ");
+            while($row = mysqli_fetch_assoc($tar)){
+                $_SESSION['user_ID'] = $row['User_ID'];
+                $_SESSION["username"] = $row["username"];
+                $_SESSION['admin'] = $row["admin"];
             }
             return "logged in";
         }else{
             return "not logged in";
         }
+    }
+}
+/*  Signup a User */
+class SignUp extends DB{
+    private $fName;
+    private $lName;
+    private $username;
+    private $email;
+    private $pwd;
+    private $cpwd;
+    private $dob;
+    private $phone;
+    private $address;
+    private $city;
+    private $state;
+    private $country;
+    private $gender;
+    public function __construct($fname, $lname, $uname, $email, $p, $cp, $dob, $phon, $addre, $cit, $stat, $country, $gender){
+       $this->connect();
+        $this->fName = mysqli_real_escape_string($this->getConnect(), $fname);
+        $this->lName = mysqli_real_escape_string($this->getConnect(), $lname);
+        $this->username = mysqli_real_escape_string($this->getConnect(), $uname);
+        $this->email = mysqli_real_escape_string($this->getConnect(), $email);
+        $this->pwd = mysqli_real_escape_string($this->getConnect(), $p);
+        $this->cpwd = mysqli_real_escape_string($this->getConnect(), $cp);
+        $this->dob = mysqli_real_escape_string($this->getConnect(), $dob);
+        $this->phone = mysqli_real_escape_string($this->getConnect(), $phon);
+        $this->address = mysqli_real_escape_string($this->getConnect(), $addre);
+        $this->city = mysqli_real_escape_string($this->getConnect(), $cit);
+        $this->state = mysqli_real_escape_string($this->getConnect(), $stat);
+        $this->country = mysqli_real_escape_string($this->getConnect(), $country);
+        $this->gender = mysqli_real_escape_string($this->getConnect(), $gender);
+    }
+    public function checkUserExist(){
+        $this->connect();
+        $exist = mysqli_num_rows(mysqli_query($this->getConnect(), "SELECT * FROM shoppers WHERE username = '$this->username' OR email = '$this->email' OR phone = '$this->phone'"));
+        if($exist > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function passwordMatch(){
+        if($this->pwd == $this->cpwd){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function getHighestId(){
+        $this->connect();
+        $query = mysqli_query($this->getConnect(), "SELECT max(User_ID) + 1 as newUser FROM shoppers;");
+        $max = mysqli_fetch_assoc($query)['newUser'];
+        return $max;
+    }
+    public function insert(){
+        $this->connect();
+        $hashed = $this->hash($this->pwd);
+        $id = $this->getHighestId();
+        $ip = $_SERVER['REMOTE_ADDR'];
+        if(!isset($_SESSION['username'])){
+            session_start();
+            $_SESSION['username'] = $this->username;
+        }
+        mysqli_query($this->getConnect(), "INSERT INTO shoppers (User_ID,fName, lName, username, email, pwd, phone, address, city, state, dob, country, gender, ip) values ('$id', '$this->fName', '$this->lName', '$this->username', '$this->email', '$hashed', '$this->phone', '$this->address', '$this->city', '$this->state', '$this->dob', '$this->country', '$this->gender', '$ip')");
+    }
+}
+/*  Create a post */
+class Products extends DB{
+    public function getHighestId(){
+        $this->connect();
+        return mysqli_fetch_assoc(mysqli_query($this->getConnect(), "SELECT max(Product_ID) + 1 as id FROM products;"))["id"];
+    }
+    public function post($user_id, $title, $desc, $price, $images, $category, $model, $year, $condition){
+        $id = $this->getHighestId();
+        mysqli_query($this->getConnect(), "INSERT INTO products (Product_ID, User_ID, title, description, price, images, category, model, year, conditions) VALUES ('$id', '$user_id', '$title', '$desc', '$price', '$images', '$category', '$model', '$year', '$condition')");
+    }
+    public function showProducts(){
+        $this->connect();
+        $list = [];
+        $i = 0;
+        $query = mysqli_query($this->getConnect(), "SELECT * FROM products");
+        while($row = mysqli_fetch_assoc($query)){
+            $id = $row["User_ID"];
+            $username = mysqli_fetch_assoc(mysqli_query($this->getConnect(),"SELECT username from shoppers WHERE User_ID = '$id'"))["username"];
+            $list[$i] = [$row["Product_ID"], $username, $row["title"],$row['description'], $row["price"], $row["images"], $row["publishedDate"], $row["views"], $row["category"], $row["model"], $row["year"], $row["conditions"]];
+            $i++;
+        }
+        return $list;
     }
 }
