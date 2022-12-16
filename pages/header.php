@@ -31,7 +31,7 @@
         if(isset($_SESSION['username'])){
             echo '
             <section>
-            <button class="btn btn-secondary" onclick="window.location = `./pages/post.php`">Create Post</button>
+            <button class="btn btn-secondary" onclick="window.location = `pages/post.php`">Create Post</button>
             </section>
             ';
         }
@@ -52,6 +52,8 @@
             <form action="./include/validator.php" method="post">
             <button name="logout" class="dropdown-item">Log out</button>
             </form>
+            <hr class="dropdown-divider">
+            <button class="dropdown-item" onclick="window.location=`./pages/profile.php`">Profile</button>
           </section>
             ';
         }else{echo '

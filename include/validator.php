@@ -94,5 +94,23 @@ if(isset($_POST['postProduct'])){
         header("Location: ./../pages/post.php");
     }
 }
+/*    Delete a post */
+if(isset($_REQUEST['productDeleteId'])){
+    $deletePost = new Products();
+    $deletePost->deleteProduct(mysqli_real_escape_string($deletePost->getConnect(), $_REQUEST['productDeleteId']));
+}
+/*   Like a Post    */
+if(isset($_REQUEST['UserLiked']) && isset($_REQUEST["ProductLiked"])){
+    $activity = new PostActivity();
+    $username = mysqli_real_escape_string($activity->getConnect(), $_REQUEST['UserLiked']);
+    $product = mysqli_real_escape_string($activity->getConnect(), $_REQUEST['ProductLiked']);
+    $activity->likeProduct($username, $product);
+}
+/*  Show Likes for a post   */
+if(isset($_REQUEST["showLikesFor"])){
+    $likes = new PostActivity();
+    $id = mysqli_real_escape_string($likes->getConnect(),$_REQUEST["showLikesFor"]);
+    echo $likes->updatePostLikes($id);
+}
 ob_flush();
 ?>

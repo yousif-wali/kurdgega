@@ -9,9 +9,16 @@
 </style>
 <?php
 $products = new Products();
-$items = $products->showProducts();
+switch($_SESSION["posts"]){
+    case "all":
+        $items = $products->showProducts();
+        break;
+    case "profile":
+        $items = $products->showProductsProfile($_SESSION['user_ID']);
+        break;
+}
 foreach($items as $item){
-    echo "<section class='border p-2 mt-3 rounded'>";
+    echo "<section class='border p-2 mt-3 rounded position-relative'>";
     $product_id = $item[0];
     $username = $item[1];
     $title = $item[2];
@@ -25,8 +32,11 @@ foreach($items as $item){
     $year = $item[10];
     $condition = $item[11];
     $imageLength = Count(explode(",", $images)) - 1;
+    if(isset($_SESSION['username']) && $_SESSION['username'] == $username){
+        echo "<section class=''><button name='removePost' class='btn btn-danger' onclick='deletePost($product_id)'>&times;</button></section>";
+    }
     echo "
-    <section class='float-end border ps-3 pe-3 rounded-top'>$username</section>
+    <section class='float-end border ps-3 pe-3 rounded-top' style='position:absolute; top:0; right:0;'>$username</section>
     ";
     echo "<section id='carouselPost$product_id' class='carousel slide carousel-fade' data-bs-ride='carousel' data-type='imagePost'>
     <div class='carousel-indicators'>";
@@ -44,7 +54,7 @@ foreach($items as $item){
         if($image != ""){
             echo "
             <div class='carousel-item'>
-            <img src='./src/images/users/$username/products/$image' class='d-block w-100'/>
+            <img src='./src/images/users/$username/products/$image' class='d-block w-100' draggable='false'/>
             </div>
             ";
         }
@@ -73,6 +83,23 @@ foreach($items as $item){
     <span><span>Condition: </span><span>$condition</span></span>
     </section>";
     echo "<section><span>Views: </span><span>$views</span></section>";
+    
+    /*          Like / Comment / Share          */
+    $current_user = isset($_SESSION["username"]) ? $_SESSION["username"] : null;
+    $isuserliked = new PostActivity();
+    $flag = $current_user? $isuserliked->isUserLiked($current_user, $product_id): 0;
+    echo "<section>
+    <section class='btn-group border w-100'>
+    <button data-role='posts' data-post='post$product_id' onclick='likePost(`$current_user`, `$product_id`, this, `$current_user`)' name='likeProduct' class='btn btn-dark d-flex justify-content-center align-items-center hover'><span class='pe-2'>0</span><i class='";
+    if($flag > 0){
+        echo "text-primary ";
+    }
+    echo"fas fa-thumbs-up'></i></button>
+    <span class='btn btn-dark d-flex justify-content-center align-items-center'><span class='pe-2'>0</span><i class='fa fa-comment' aria-hidden='true'></i></span>
+    <span class='btn btn-dark d-flex justify-content-center align-items-center'><span class='pe-2'>0</span><i class='fas fa-share'></i></span>
+
+    </section>
+    </section>";
     echo "</section>";
 }
 ?>

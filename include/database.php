@@ -121,6 +121,19 @@ class Products extends DB{
         $id = $this->getHighestId();
         mysqli_query($this->getConnect(), "INSERT INTO products (Product_ID, User_ID, title, description, price, images, category, model, year, conditions) VALUES ('$id', '$user_id', '$title', '$desc', '$price', '$images', '$category', '$model', '$year', '$condition')");
     }
+    public function showProductsProfile($userid){
+        $this->connect();
+        $list = [];
+        $i = 0;
+        $query = mysqli_query($this->getConnect(), "SELECT * FROM products WHERE User_ID = '$userid'");
+        while($row = mysqli_fetch_assoc($query)){
+            $id = $row["User_ID"];
+            $username = mysqli_fetch_assoc(mysqli_query($this->getConnect(),"SELECT username from shoppers WHERE User_ID = '$id'"))["username"];
+            $list[$i] = [$row["Product_ID"], $username, $row["title"],$row['description'], $row["price"], $row["images"], $row["publishedDate"], $row["views"], $row["category"], $row["model"], $row["year"], $row["conditions"]];
+            $i++;
+        }
+        return $list;
+    }
     public function showProducts(){
         $this->connect();
         $list = [];
@@ -133,5 +146,45 @@ class Products extends DB{
             $i++;
         }
         return $list;
+    }
+    public function deleteProduct($id){
+        mysqli_query($this->getConnect(),"DELETE FROM products where Product_Id = '$id'");
+    }
+}
+/*  Post Activity   */
+class PostActivity extends DB{
+    public function getHighestId(){
+        $this->connect();
+        $id = mysqli_fetch_assoc(mysqli_query($this->getConnect(), "SELECT max(PostID) + 1 as id FROM postactivity;"))["id"];
+        if($id == 0){
+            return 1;
+        }else{
+            return $id;
+        }
+    }
+    public function likeProduct($username, $product_id){
+        $id = $this->getHighestId();
+        $likeExists = mysqli_query($this->getConnect(), "SELECT likes FROM postactivity WHERE Product_ID = '$product_id' AND username = '$username'");
+        
+        if(mysqli_num_rows($likeExists) > 0){
+            mysqli_query($this->getConnect(),"UPDATE postactivity SET likes = 0 WHERE username='$username' AND Product_ID = '$product_id'");
+        }
+        else{
+            mysqli_query($this->getConnect(),"INSERT INTO postactivity (PostID, Product_ID, username, likes) VALUES ('$id', '$product_id', '$username', 1)");
+        }
+        if (mysqli_fetch_assoc($likeExists)["likes"] == 0){
+            mysqli_query($this->getConnect(),"UPDATE postactivity SET likes = 1 WHERE username='$username' AND Product_ID = '$product_id'");
+        }
+    }
+    public function updatePostLikes($id){
+        return mysqli_fetch_assoc(mysqli_query($this->getConnect(), "SELECT count(likes) as total FROM postactivity WHERE Product_ID = '$id' AND likes = 1"))["total"];
+    }
+    public function isUserLiked($username, $product_id){
+        $query  =mysqli_query($this->getConnect(), "SELECT likes from postactivity WHERE username = '$username' AND Product_ID='$product_id' AND likes = 1"); 
+        if($username != null && $product_id != null && mysqli_num_rows($query) > 0){
+            return mysqli_fetch_assoc($query)["likes"];
+        }else{
+            return 0;
+        }
     }
 }

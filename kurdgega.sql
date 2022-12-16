@@ -72,6 +72,7 @@ CREATE TABLE `postactivity` (
 
 LOCK TABLES `postactivity` WRITE;
 /*!40000 ALTER TABLE `postactivity` DISABLE KEYS */;
+INSERT INTO `postactivity` VALUES (1,0,'buhar04',1,'','2022-12-15 18:24:30',0),(2,0,'bastory',1,'','2022-12-15 19:59:21',0);
 /*!40000 ALTER TABLE `postactivity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,7 +109,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (0,0,'This is a title','this is a long description',299.99,'fuq0hfgjdjp7x29mr9nv.jpg,OIP (1).jpg,','2022-12-14 20:49:03','2022-12-28 20:49:03',0,'Home','90s',2019,'usednew'),(1,0,'This is a title','this is a long description',299.99,'fuq0hfgjdjp7x29mr9nv.jpg,OIP (1).jpg,','2022-12-14 20:50:45','2022-12-28 20:50:45',0,'Home','90s',2019,'usednew');
+INSERT INTO `products` VALUES (0,0,'This is a title','hello',544,'OIP.jpg,','2022-12-15 17:22:25','2022-12-29 17:22:25',0,'Home','90s',1950,'new');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -124,7 +125,7 @@ CREATE TABLE `shoppers` (
   `fName` varchar(100) NOT NULL,
   `lName` varchar(100) NOT NULL,
   `username` varchar(15) NOT NULL,
-  `email` text NOT NULL,
+  `email` varchar(200) NOT NULL,
   `pwd` longtext NOT NULL,
   `dob` date NOT NULL,
   `isAdmin` tinyint(1) NOT NULL DEFAULT 0,
@@ -141,7 +142,7 @@ CREATE TABLE `shoppers` (
   `vip` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`User_ID`),
   UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `email` (`email`) USING HASH
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -164,4 +165,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-14 23:18:55
+-- Dump completed on 2022-12-15 21:38:45
