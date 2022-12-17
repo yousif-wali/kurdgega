@@ -20,7 +20,7 @@
     <?php session_start(); include "./pages/header.php";?>
     <main>
         <?php include "./pages/catagories.php";?>
-        <section class="posts container">
+        <section class="posts container" style="width:30%">
             <?php $_SESSION['posts'] = "all"; include "./pages/products.php";?>
         </section>
     </main>

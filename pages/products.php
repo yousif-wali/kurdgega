@@ -6,6 +6,9 @@
         width:100%;
         aspect-ratio:1/1;
     }
+    [cursor="default"]{
+        cursor:default;
+    }
 </style>
 <?php
 $products = new Products();
@@ -32,11 +35,14 @@ foreach($items as $item){
     $year = $item[10];
     $condition = $item[11];
     $imageLength = Count(explode(",", $images)) - 1;
+    echo "<section class='border-bottom position-relative p-1 d-flex justify-content-between align-items-center'>";
     if(isset($_SESSION['username']) && $_SESSION['username'] == $username){
-        echo "<section class=''><button name='removePost' class='btn btn-danger' onclick='deletePost($product_id)'>&times;</button></section>";
+        echo "
+        <section class=''><button name='removePost' class='btn btn-danger float-left' onclick='deletePost($product_id)'>&times;</button></section>";
     }
     echo "
-    <section class='float-end border ps-3 pe-3 rounded-top' style='position:absolute; top:0; right:0;'>$username</section>
+    <section class='float-end border ps-3 pe-3 rounded' cursor='default'>$username</section>
+    </section>
     ";
     echo "<section id='carouselPost$product_id' class='carousel slide carousel-fade' data-bs-ride='carousel' data-type='imagePost'>
     <div class='carousel-indicators'>";

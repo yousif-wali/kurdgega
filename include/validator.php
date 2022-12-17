@@ -70,7 +70,7 @@ if(isset($_POST['postProduct'])){
         }
     }
     foreach($extensions as $test){
-        if($test != "jpg" && $test != "jpeg" && $test != "png" && $test != "gif" ){
+        if($test != "jpg" && $test != "jpeg" && $test != "png" && $test != "gif" && $test != "jfif"){
             $upload = 0;
         }
     }
@@ -111,6 +111,42 @@ if(isset($_REQUEST["showLikesFor"])){
     $likes = new PostActivity();
     $id = mysqli_real_escape_string($likes->getConnect(),$_REQUEST["showLikesFor"]);
     echo $likes->updatePostLikes($id);
+}
+/*  Update User Profile */
+if(isset($_POST['updateProfile'])){
+    $user = new User();
+    $fName = mysqli_real_escape_string($user->getConnect(),$_POST['firstName']);
+    $lName = mysqli_real_escape_string($user->getConnect(),$_POST['lastName']);
+    $phone = mysqli_real_escape_string($user->getConnect(),$_POST['phone']);
+    $address = mysqli_real_escape_string($user->getConnect(),$_POST['address']);
+    $city = mysqli_real_escape_string($user->getConnect(),$_POST['city']);
+    $state = mysqli_real_escape_string($user->getConnect(),$_POST['state']);
+    $country = mysqli_real_escape_string($user->getConnect(),$_POST['country']);
+
+    $file_name = $_FILES["uploadProfile"]["name"];
+    $file_tmp = $_FILES['uploadProfile']["tmp_name"];
+    $fileSize = $_FILES["uploadProfile"]["size"];
+    $extension = strtolower(pathinfo($file_name,PATHINFO_EXTENSION)); 
+    if($extension != "jpg" && $extension != "jpeg" && $extension != "png" && $extension != "gif" && $extension != "jfif" && $file_name != null && $fileSize <= 2000000 ){
+        setcookie("image", "false", time()+ 15, "/");
+        header("Location: ./../pages/profile.php");
+    }else{
+        $user->updateProfile($_SESSION['username'], $fName, $lName, $phone, $address, $city, $state, $country, $file_name);
+        if($file_name != null){
+            if(!file_exists("./../src/images/users/".$_SESSION["username"]."/profile/")){
+                mkdir("./../src/images/users/".$_SESSION["username"]."/profile/");
+            }
+            copy($file_tmp,"./../src/images/users/".$_SESSION["username"]."/profile/profile.jpg");
+        }
+        setcookie("profileInfo", "updated", time()+ 15, "/");
+        header("Location: ./../pages/profile.php");
+    }
+
+}
+/*  SetCookie For Profile   */
+if(isset($_GET['profileSelected'])){
+    $chosen = $_GET['profileSelected'];
+    setcookie("profileSelected", $chosen , time() + 3600, "/");
 }
 ob_flush();
 ?>

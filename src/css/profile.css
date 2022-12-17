@@ -3,14 +3,47 @@
     padding:0;
 }
 body{
-    overflow:hidden;
+    overflow-x:hidden;
+}
+aside > *{
+    position:sticky;
+    top:5px;
+}
+aside section > *{
+    margin:5px 0;
 }
 aside{
-    position:fixed;
+    width:40vw;
     height:100vh;
+    margin-top:10px;
 }
 main{
-    max-height:100vh;
     overflow-x:hidden;
     overflow-y:scroll;
+    margin-top:60px;
+    height:calc(100vh - 60px);
+    display:flex;
+    justify-content: space-between;
+    align-items:flex-start;
+}
+main::-webkit-scrollbar{
+    background-color: transparent;
+}
+[data-type='selection']{
+    text-align:left;
+    width:50vw;
+    margin-right:0vw;
+}
+@media screen and (min-width: 36em){
+    aside section{
+        align-items: center!important;
+        
+    }
+    aside section > *{
+        width:50%!important;
+    }
+    [data-type='selection']{
+        width:30vw;
+        margin-right:10vw;
+    }
 }

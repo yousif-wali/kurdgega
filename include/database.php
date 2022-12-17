@@ -40,6 +40,8 @@ class Login extends DB{
                 $_SESSION["username"] = $row["username"];
                 $_SESSION['admin'] = $row["admin"];
             }
+            $username = $_SESSION['username'];
+            mysqli_query($this->getConnect(), "UPDATE shoppers SET lastLogin = CURRENT_TIMESTAMP() WHERE username = '$username'");
             return "logged in";
         }else{
             return "not logged in";
@@ -108,7 +110,7 @@ class SignUp extends DB{
             session_start();
             $_SESSION['username'] = $this->username;
         }
-        mysqli_query($this->getConnect(), "INSERT INTO shoppers (User_ID,fName, lName, username, email, pwd, phone, address, city, state, dob, country, gender, ip) values ('$id', '$this->fName', '$this->lName', '$this->username', '$this->email', '$hashed', '$this->phone', '$this->address', '$this->city', '$this->state', '$this->dob', '$this->country', '$this->gender', '$ip')");
+        mysqli_query($this->getConnect(), "INSERT INTO shoppers (User_ID,fName, lName, username, email, pwd, phone, address, city, state, dob, country, gender, ip, signedup) values ('$id', '$this->fName', '$this->lName', '$this->username', '$this->email', '$hashed', '$this->phone', '$this->address', '$this->city', '$this->state', '$this->dob', '$this->country', '$this->gender', '$ip', 'CURRENT_DATE()')");
     }
 }
 /*  Create a post */
@@ -185,6 +187,25 @@ class PostActivity extends DB{
             return mysqli_fetch_assoc($query)["likes"];
         }else{
             return 0;
+        }
+    }
+}
+/*   USERS          */
+class User extends DB{
+    public function getInformation($username){
+        $this->connect();
+        $list = [];
+        $query = mysqli_query($this->getConnect(), "SELECT * FROM shoppers WHERE username = '$username'");
+        while($row = mysqli_fetch_assoc($query)){
+            $list = [$row["fName"], $row["lName"], $row["username"], $row["email"], $row['phone'], $row["gender"], $row['signedup'], $row['address'], $row['city'], $row['state'], $row['country'], $row['dob']];
+        }
+        return $list;
+    }
+    public function updateProfile($username, $fName, $lName, $phone, $address, $city, $state, $country, $photo){
+        if($photo == null){
+            mysqli_query($this->getConnect(), "UPDATE shoppers SET fName = '$fName', lName = '$lName', phone = '$phone', address = '$address', city = '$city', state = '$state', country = '$country'  WHERE username='$username'");
+        }else{
+            mysqli_query($this->getConnect(), "UPDATE shopper SET fName = '$fName', lName = '$lName', phone = '$phone', address = '$address', city = '$city', state = '$state', country = '$country', profile = '$photo'  WHERE username='$username'");
         }
     }
 }
