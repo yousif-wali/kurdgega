@@ -35,6 +35,17 @@ if(isset($_POST['signup'])){
             header("Location: ./../pages/signup.php?password=doesnotmatch");
         }else{
             $insert->insert();
+            mkdir("./../src/images/users/".$_SESSION['username']);
+            mkdir("./../src/images/users/".$_SESSION['username']."/profile/");
+            mkdir("./../src/images/users/".$_SESSION['username']."/products/");
+            if($gender == "male"){
+                copy("./../src/images/users/maleProfile.png", "./../src/images/users/".$_SESSION['username']."/profile/profile.png");
+              
+            }else if ($gender == "female"){
+                copy("./../src/images/users/femaleProfile.png", "./../src/images/users/".$_SESSION['username']."/profile/profile.png");
+            }else{
+                copy("./../src/images/users/maleProfile.png", "./../src/images/users/".$_SESSION['username']."/profile/profile.png");
+            }
             header("Location: ./../index.php");
         }
     }
@@ -59,7 +70,7 @@ if(isset($_POST['postProduct'])){
         $extensions[$c] = strtolower(pathinfo($test,PATHINFO_EXTENSION)); 
         $c++;  
     }
-    if(!file_exists("./../src/images/users/".$_SESSION["username"]."/products/")){
+    if(!file_exists("./../src/images/users/".$_SESSION["username"])){
         mkdir("./../src/images/users/".$_SESSION["username"]."/products/");
     }
     $imageTmps = $_FILES['image']["tmp_name"];
@@ -131,12 +142,13 @@ if(isset($_POST['updateProfile'])){
         setcookie("image", "false", time()+ 15, "/");
         header("Location: ./../pages/profile.php");
     }else{
-        $user->updateProfile($_SESSION['username'], $fName, $lName, $phone, $address, $city, $state, $country, $file_name);
-        if($file_name != null){
+        $fileNull = $file_name == null ? null : $file_name;
+        $user->updateProfile($_SESSION['username'], $fName, $lName, $phone, $address, $city, $state, $country);
+        if($fileNull != null){
             if(!file_exists("./../src/images/users/".$_SESSION["username"]."/profile/")){
                 mkdir("./../src/images/users/".$_SESSION["username"]."/profile/");
             }
-            copy($file_tmp,"./../src/images/users/".$_SESSION["username"]."/profile/profile.jpg");
+            rename($file_tmp,"./../src/images/users/".$_SESSION["username"]."/profile/profile.png");
         }
         setcookie("profileInfo", "updated", time()+ 15, "/");
         header("Location: ./../pages/profile.php");

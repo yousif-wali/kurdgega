@@ -9,6 +9,18 @@
     [cursor="default"]{
         cursor:default;
     }
+    [data-bs-slide='next'], [data-bs-slide='prev']{
+        background-color:hsl(0 100% 0% / 0.5);
+        backdrop-filter: blur(2px);
+        height:50%;
+        margin-top:25%;
+        border-radius:25px;
+    }
+    @media screen and (max-width:56em){
+        .posts{
+            width:100%!important;
+        }
+    }
 </style>
 <?php
 $products = new Products();
@@ -21,7 +33,7 @@ switch($_SESSION["posts"]){
         break;
 }
 foreach($items as $item){
-    echo "<section class='border p-2 mt-3 rounded position-relative'>";
+    echo "<section class='border post p-2 mt-3 rounded position-relative'>";
     $product_id = $item[0];
     $username = $item[1];
     $title = $item[2];
@@ -39,9 +51,11 @@ foreach($items as $item){
     if(isset($_SESSION['username']) && $_SESSION['username'] == $username){
         echo "
         <section class=''><button name='removePost' class='btn btn-danger float-left' onclick='deletePost($product_id)'>&times;</button></section>";
+    }else{
+        echo "<section></section>";
     }
     echo "
-    <section class='float-end border ps-3 pe-3 rounded' cursor='default'>$username</section>
+    <section class='border ps-3 pe-3 rounded d-flex justify-content-between align-items-center' cursor='default'><img width='50' height='50' class='border rounded-circle m-2 user-profile' draggable='false' src='src/images/users/$username/profile/profile.jpg'/>$username</section>
     </section>
     ";
     echo "<section id='carouselPost$product_id' class='carousel slide carousel-fade' data-bs-ride='carousel' data-type='imagePost'>

@@ -43,7 +43,7 @@
                             echo '<section class="text-white bg-success mt-2 p-2">The information is successfully updated!</section>';
                         }
                         ?>
-                <form action="include/validator.php" method="POST" class="pe-3">
+                <form action="include/validator.php" method="POST" class="pe-3" enctype="multipart/form-data">
                     <section class="row g-2">
                         <?php
                         $user = new User();

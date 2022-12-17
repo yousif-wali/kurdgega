@@ -99,6 +99,9 @@ class SignUp extends DB{
         $this->connect();
         $query = mysqli_query($this->getConnect(), "SELECT max(User_ID) + 1 as newUser FROM shoppers;");
         $max = mysqli_fetch_assoc($query)['newUser'];
+        if($max == 0){
+            $max++;
+        }
         return $max;
     }
     public function insert(){
@@ -109,8 +112,10 @@ class SignUp extends DB{
         if(!isset($_SESSION['username'])){
             session_start();
             $_SESSION['username'] = $this->username;
+            $_SESSION['user_ID'] = $id;
+            $_SESSION['gender'] = $this->gender;
         }
-        mysqli_query($this->getConnect(), "INSERT INTO shoppers (User_ID,fName, lName, username, email, pwd, phone, address, city, state, dob, country, gender, ip, signedup) values ('$id', '$this->fName', '$this->lName', '$this->username', '$this->email', '$hashed', '$this->phone', '$this->address', '$this->city', '$this->state', '$this->dob', '$this->country', '$this->gender', '$ip', 'CURRENT_DATE()')");
+        mysqli_query($this->getConnect(), "INSERT INTO shoppers (User_ID,fName, lName, username, email, pwd, phone, address, city, state, dob, country, gender, ip, profile) values ('$id', '$this->fName', '$this->lName', '$this->username', '$this->email', '$hashed', '$this->phone', '$this->address', '$this->city', '$this->state', '$this->dob', '$this->country', '$this->gender', '$ip', 'profile.png')");
     }
 }
 /*  Create a post */
@@ -201,11 +206,9 @@ class User extends DB{
         }
         return $list;
     }
-    public function updateProfile($username, $fName, $lName, $phone, $address, $city, $state, $country, $photo){
-        if($photo == null){
-            mysqli_query($this->getConnect(), "UPDATE shoppers SET fName = '$fName', lName = '$lName', phone = '$phone', address = '$address', city = '$city', state = '$state', country = '$country'  WHERE username='$username'");
-        }else{
-            mysqli_query($this->getConnect(), "UPDATE shopper SET fName = '$fName', lName = '$lName', phone = '$phone', address = '$address', city = '$city', state = '$state', country = '$country', profile = '$photo'  WHERE username='$username'");
-        }
+    public function updateProfile($username, $fName, $lName, $phone, $address, $city, $state, $country){
+      
+    mysqli_query($this->getConnect(), "UPDATE shoppers SET fName = '$fName', lName = '$lName', phone = '$phone', address = '$address', city = '$city', state = '$state', country = '$country', profile = 'profile.png'  WHERE username='$username'");
+        
     }
 }

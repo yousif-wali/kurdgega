@@ -55,3 +55,15 @@ const likePost = (username, product, button, userloggedin)=>{
     }
 
 }
+const removeSliders = ()=>{
+  let indicator = document.querySelectorAll("[data-type='imagePost'] .carousel-indicators");
+  for(i = 0; i < indicator.length; i++){
+    if(indicator[i].children.length == 1){
+      document.querySelector(`#${indicator[i].parentNode.id} [data-bs-slide='next']`).style.display = "none";
+      document.querySelector(`#${indicator[i].parentNode.id} [data-bs-slide='prev']`).style.display = "none";
+      document.querySelector(`#${indicator[i].parentNode.id} .carousel-indicators`).style.display = "none";
+    }
+    console.log(indicator[i].parentNode)
+  }
+}
+removeSliders();
