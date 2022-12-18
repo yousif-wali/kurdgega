@@ -1,0 +1,8 @@
+RewriteEngine on
+RewriteRule ^Home ./index.php
+RewriteRule ^Post ./pages/post.php
+RewriteRule ^User/([a-zA-Z0-9]+) ./pages/visit.php?user=$1
+RewriteRule ^Profile ./pages/profile.php
+RewriteRule ^Login ./pages/login.php
+RewriteRule ^Signup ./pages/signup.php
+RewriteRule ^Checking ./include/validator.php

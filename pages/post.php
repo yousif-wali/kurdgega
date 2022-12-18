@@ -2,12 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post - <?php echo $_SESSION['username']?></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <?php include "./head.php";?>
     <style>
         body{
             height:100vh;
@@ -22,7 +18,7 @@
     </style>
 </head>
 <body class="d-flex justify-content-center align-items-center">
-    <form action="./../include/validator.php" method="POST" enctype="multipart/form-data">
+    <form action="./include/validator.php" method="POST" enctype="multipart/form-data">
         <section class="form-floating">
             <input id="title" type="text" name="title" class="form-control" placeholder="John"/>
             <label for="title" class="form-label">Title</label>
@@ -69,7 +65,7 @@
         }
         ?>
     </form>
-    <section class="bg-success text-white p-2 rounded" style="position:fixed; bottom:1em; right:1em; cursor:pointer" onclick="window.location = './../index.php'">
+    <section class="bg-success text-white p-2 rounded" style="position:fixed; bottom:1em; right:1em; cursor:pointer" onclick="window.location = './Home'">
     Home
     </section>
 </body>

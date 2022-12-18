@@ -128,10 +128,11 @@ class Products extends DB{
         $id = $this->getHighestId();
         mysqli_query($this->getConnect(), "INSERT INTO products (Product_ID, User_ID, title, description, price, images, category, model, year, conditions) VALUES ('$id', '$user_id', '$title', '$desc', '$price', '$images', '$category', '$model', '$year', '$condition')");
     }
-    public function showProductsProfile($userid){
+    public function showProductsProfile($username){
         $this->connect();
         $list = [];
         $i = 0;
+        $userid = mysqli_fetch_assoc(mysqli_query($this->getConnect(), "SELECT * FROM shoppers WHERE username = '$username'"))["User_ID"];
         $query = mysqli_query($this->getConnect(), "SELECT * FROM products WHERE User_ID = '$userid'");
         while($row = mysqli_fetch_assoc($query)){
             $id = $row["User_ID"];
@@ -141,6 +142,7 @@ class Products extends DB{
         }
         return $list;
     }
+    
     public function showProducts(){
         $this->connect();
         $list = [];

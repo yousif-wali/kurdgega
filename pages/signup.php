@@ -7,7 +7,7 @@
     <title>Sign up</title>
 </head>
 <body>
-    <form action="./../include/validator.php" method="POST">
+    <form action="Checking" method="POST">
         <section>
             <input type="text" name="firstName" required/>
             <label>First Name</label>

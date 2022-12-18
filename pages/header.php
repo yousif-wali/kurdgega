@@ -1,13 +1,3 @@
-<!--
-    !بەشی هێدەرەکان
-    ئۆتۆمبیل
-    خانو
-    ئەلیکترۆنی
-    جلوبەرگ
-    مولک
-    کەلوپەلی ناو ماڵ
-
--->
 <style>
     [data-role="header"]{
         border-bottom:1px solid white;
@@ -31,7 +21,7 @@
         if(isset($_SESSION['username'])){
             echo '
             <section>
-            <button class="btn btn-secondary" onclick="window.location = `pages/post.php`">Create Post</button>
+            <button class="btn btn-secondary" onclick="window.location = `Post`">Create Post</button>
             </section>
             ';
         }
@@ -53,7 +43,7 @@
             <button name="logout" class="dropdown-item">Log out</button>
             </form>
             <hr class="dropdown-divider">
-            <button class="dropdown-item" onclick="window.location=`./pages/profile.php`">Profile</button>
+            <button class="dropdown-item" onclick="window.location=`Profile`">Profile</button>
           </section>
             ';
         }else{echo '
@@ -62,8 +52,8 @@
               </button>
     
             <section class="dropdown-menu">               
-                <button class="dropdown-item" onclick="window.location=`./pages/Login.php`">Log In</button>
-                <button class="dropdown-item" onclick="window.location=`./pages/Signup.php`">Sign Up</button>            
+                <button class="dropdown-item" onclick="window.location=`Login`">Log In</button>
+                <button class="dropdown-item" onclick="window.location=`Signup`">Sign Up</button>            
               </section>
                 ';
         }?>

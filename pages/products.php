@@ -6,8 +6,8 @@
         width:100%;
         aspect-ratio:1/1;
     }
-    [cursor="default"]{
-        cursor:default;
+    [cursor="pointer"]{
+        cursor:pointer;
     }
     [data-bs-slide='next'], [data-bs-slide='prev']{
         background-color:hsl(0 100% 0% / 0.5);
@@ -29,7 +29,10 @@ switch($_SESSION["posts"]){
         $items = $products->showProducts();
         break;
     case "profile":
-        $items = $products->showProductsProfile($_SESSION['user_ID']);
+        $items = $products->showProductsProfile($_SESSION['username']);
+        break;
+        case "visit":
+            $items = $products->showProductsProfile($_SESSION['visit']);
         break;
 }
 foreach($items as $item){
@@ -55,7 +58,7 @@ foreach($items as $item){
         echo "<section></section>";
     }
     echo "
-    <section class='border ps-3 pe-3 rounded d-flex justify-content-between align-items-center' cursor='default'><img width='50' height='50' class='border rounded-circle m-2 user-profile' draggable='false' src='src/images/users/$username/profile/profile.jpg'/>$username</section>
+    <section onclick='visit(`$username`)' class='border ps-3 pe-3 rounded d-flex justify-content-between align-items-center' cursor='pointer'><img width='50' height='50' class='border rounded-circle m-2 user-profile' draggable='false' src='src/images/users/$username/profile/profile.png'/>$username</section>
     </section>
     ";
     echo "<section id='carouselPost$product_id' class='carousel slide carousel-fade' data-bs-ride='carousel' data-type='imagePost'>
@@ -123,10 +126,13 @@ foreach($items as $item){
     echo "</section>";
 }
 ?>
+<script src="src/script/index.js"></script>
 <script>
     carousel_inner = document.getElementsByClassName("carousel-inner");
     for(let i = 0; i < carousel_inner.length; i++){
         carousel_inner[i].children[0].classList.add("active");
     }
-    
+    const visit = (to) =>{
+        window.location = "User/"+to;
+    }
 </script>

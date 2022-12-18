@@ -7,9 +7,9 @@ ob_start();
 if(isset($_POST['login'])){
     $login = new Login($_POST['username'], $_POST['password']);
     if($login->login() == "logged in"){
-        header("Location: ./../index.php");
+        header("Location: ./Home");
     }else{
-        header("Location: ./../pages/login.php?err");
+        header("Location: ./Login");
     }
 }
 /*  Sign up a user */
@@ -29,10 +29,10 @@ if(isset($_POST['signup'])){
     $gender = $_POST['gender'];
     $insert = new SignUp($fName, $lname, $username, $email, $password, $cpassword, $dob, $phone, $address, $city, $state, $country, $gender);
     if($insert->checkUserExist()){
-        header("Location: ./../pages/signup.php?username=exists");
+        header("Location: ./Signup");
     }else{
         if(!$insert->passwordMatch()){
-            header("Location: ./../pages/signup.php?password=doesnotmatch");
+            header("Location: ./Signup");
         }else{
             $insert->insert();
             mkdir("./../src/images/users/".$_SESSION['username']);
@@ -46,7 +46,7 @@ if(isset($_POST['signup'])){
             }else{
                 copy("./../src/images/users/maleProfile.png", "./../src/images/users/".$_SESSION['username']."/profile/profile.png");
             }
-            header("Location: ./../index.php");
+            header("Location: ./Home");
         }
     }
 }
@@ -55,7 +55,7 @@ if(isset($_POST['logout'])){
     session_start();
     session_unset();
     session_destroy();
-    header("Location: ./../index.php");
+    header("Location: ./Home");
 }
 /*    Post Product  */
 if(isset($_POST['postProduct'])){
@@ -102,7 +102,7 @@ if(isset($_POST['postProduct'])){
             $c++;
         }
         setcookie("productpost", true, time()+15, "/");
-        header("Location: ./../pages/post.php");
+        header("Location: ./Post");
     }
 }
 /*    Delete a post */
@@ -140,7 +140,7 @@ if(isset($_POST['updateProfile'])){
     $extension = strtolower(pathinfo($file_name,PATHINFO_EXTENSION)); 
     if($extension != "jpg" && $extension != "jpeg" && $extension != "png" && $extension != "gif" && $extension != "jfif" && $file_name != null && $fileSize <= 2000000 ){
         setcookie("image", "false", time()+ 15, "/");
-        header("Location: ./../pages/profile.php");
+        header("Location: ./Profile");
     }else{
         $fileNull = $file_name == null ? null : $file_name;
         $user->updateProfile($_SESSION['username'], $fName, $lName, $phone, $address, $city, $state, $country);
@@ -151,7 +151,7 @@ if(isset($_POST['updateProfile'])){
             rename($file_tmp,"./../src/images/users/".$_SESSION["username"]."/profile/profile.png");
         }
         setcookie("profileInfo", "updated", time()+ 15, "/");
-        header("Location: ./../pages/profile.php");
+        header("Location: ./Profile");
     }
 
 }
