@@ -6,3 +6,4 @@ RewriteRule ^Profile ./pages/profile.php
 RewriteRule ^Login ./pages/login.php
 RewriteRule ^Signup ./pages/signup.php
 RewriteRule ^Checking ./include/validator.php
+RewriteRule ^KurdMessenger ./pages/messenger.php

@@ -1,0 +1,51 @@
+[data-role="layout"]{
+    display:grid;
+    grid-template-columns: 30vw auto;
+}
+[data-role="layout"] > *{
+    height:100vh;
+}
+body{
+    overflow-x:hidden;
+}
+aside{
+    position:fixed;
+    width:35vw;
+    background-color:rgb(51, 50, 65);
+}
+main{
+    width:65vw;
+    margin-left:35vw;
+    background-color:rgb(97, 96, 115);
+    padding:1em;
+    position: relative;
+    overflow-x:hidden;
+}
+.msg{
+    position:fixed;
+    bottom:0;
+    right:0;
+    width:63vw;
+}
+.msg form{
+    display:grid;
+    justify-content: center;
+    align-items:center;
+    grid-template-columns: 1fr auto;
+}
+.msg input{
+    height:100%;
+}
+.chats section{
+    display:flex;
+    height:40px;
+    width:max-content;
+    padding:0.25em 0.5em;
+}
+.from{
+    margin:20px 0;
+}
+.to{
+    margin:20px 0;
+    margin-left:auto;
+}

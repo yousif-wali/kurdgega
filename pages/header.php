@@ -14,6 +14,9 @@
         margin:0 1em;
         cursor:pointer; 
     }
+    [cursor="pointer"]{
+        cursor:pointer;
+    }
 </style>
 <header data-role="header" class="d-flex flex-row justify-content-between align-items-center">
     <section>
@@ -28,9 +31,12 @@
         ?>
     </section>
     <section>
-
     </section>
-    <section>
+    <section class="d-flex justify-content-between align-items-center">
+    <span cursor="pointer" class="btn btn-success" onclick="window.location = 'KurdMessenger'">
+        <i class="fa fa-comment" aria-hidden="true"></i>
+        KurdMessenger
+    </span>    
     <section class="d-flex justify-content-between p-2 profile">
             <?php if(isset($_SESSION['username'])){
             echo '

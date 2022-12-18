@@ -63,7 +63,6 @@ const removeSliders = ()=>{
       document.querySelector(`#${indicator[i].parentNode.id} [data-bs-slide='prev']`).style.display = "none";
       document.querySelector(`#${indicator[i].parentNode.id} .carousel-indicators`).style.display = "none";
     }
-    console.log(indicator[i].parentNode)
   }
 }
 removeSliders();
