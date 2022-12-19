@@ -102,7 +102,7 @@ if(isset($_POST['postProduct'])){
             $c++;
         }
         setcookie("productpost", true, time()+15, "/");
-        header("Location: ./Post");
+        header("Location: ./../Post");
     }
 }
 /*    Delete a post */

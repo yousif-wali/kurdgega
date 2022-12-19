@@ -161,11 +161,11 @@ class Products extends DB{
     }
     public function addViews($username){
         $getUserID = mysqli_fetch_assoc(mysqli_query($this->getConnect(),"SELECT User_ID FROM shoppers WHERE username = '$username'"))["User_ID"];
-        $getView = mysqli_query($this->getConnect(), "SELECT views FROM products WHERE User_ID = '$getUserID'");
-        while($row = mysqli_fetch_assoc($getView)){
-            $view = $row['views'];
-            $view++;
-            mysqli_query($this->getConnect(), "UPDATE products SET views = '$view' WHERE User_ID = '$getUserID'");
+        $query = mysqli_query($this->getConnect(),"SELECT * from products where User_ID = '$getUserID'");
+        while($row = mysqli_fetch_assoc($query)){
+            $view = $row["views"];
+            $product_id = $row["Product_ID"];
+            mysqli_query($this->getConnect(),"UPDATE products SET views = '$view' + 1 WHERE Product_ID = '$product_id'");
         }
     }
 }
