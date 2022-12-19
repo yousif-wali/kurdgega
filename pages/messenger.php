@@ -11,22 +11,23 @@
 <body>
     <?php include "./header.php";?>
     <section data-role="layout" style="margin-top:60px;">
-        <aside class="border">
+        <aside>
             <section class="profile" id="chatHistory">
             </section>
         </aside>
-        <main>
+        <main class="position-relative">
             <section class="chats" id="chats">                
             </section>
             <section class="msg">
                 <section data-type="form">
-                    <input type="text" data-role="sending" /><button class="btn btn-success" onclick="sendMessage()">Send<i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                    <input type="text" data-role="sending" style="font-weight:normal" /><button class="btn btn-success" onclick="sendMessage()">Send<i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                 </section>
             </section>
         </main>
     </section>
     <?php
-    echo '<script>const userLoggedin = "'.$_SESSION['username'].'"; let messageTo = "'.$_SESSION['sendMessageTo'].'"</script>';
+    $mesg = isset($_SESSION['sendMessageTo'])?$_SESSION['sendMessageTo']:"";
+    echo '<script>const userLoggedin = "'.$_SESSION['username'].'"; let messageTo = "'.$mesg.'"</script>';
     ?>
     <script src="./src/script/messenger.js">
     </script>

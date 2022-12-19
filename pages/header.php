@@ -1,7 +1,7 @@
 <style>
     [data-role="header"]{
         border-bottom:1px solid white;
-        background-color:var(--header-primary-background-color);
+        background-image:var(--header-primary-background-color);
         backdrop-filter: blur(1px);
         z-index:999;
         position:fixed;

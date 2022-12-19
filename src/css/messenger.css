@@ -1,3 +1,6 @@
+*{
+    font-weight:bold;
+}
 [data-role="layout"]{
     display:grid;
     grid-template-columns: 30vw auto;
@@ -10,13 +13,25 @@ body{
 }
 aside{
     position:fixed;
-    width:35vw;
-    background-color:rgb(51, 50, 65);
+    width:40vw;
+    background-image:linear-gradient(45deg, #aa5d84,#5f2a59);
+    box-shadow:10px 0px 10px 5px #5f2a59;
+    z-index:3
+}
+aside::after{
+    position:absolute;
+    content:"a";
+    color:transparent;
+    width:100%;
+    height:10px;
+    bottom:60px;
+    background-image:linear-gradient(45deg,#aa5d84,#5f2a59,#aa5d84);
+    box-shadow:0 -5px 4px 6px #5f2a59;
 }
 main{
-    width:65vw;
-    margin-left:35vw;
-    background-color:rgb(97, 96, 115);
+    width:60vw;
+    margin-left:40vw;
+    background-image:radial-gradient(#aa5d84, #5f2a59);
     padding:1em;
     position: relative;
     overflow-x:hidden;
@@ -25,9 +40,11 @@ main{
     position:fixed;
     bottom:0;
     right:0;
-    width:63vw;
+    width:60vw;
+    z-index:4;
 }
 .msg [data-type="form"]{
+    width:100%;
     display:grid;
     justify-content: center;
     align-items:center;
@@ -52,6 +69,9 @@ main{
 }
 [data-type="message"]{
     padding:0.3em 0.5em;
+    background-color: hsl(0 0% 100% / 0.5);
+    backdrop-filter: blur(1px);
+    font-weight:normal;
 }
 .tos{
     margin-left:auto;
@@ -72,12 +92,12 @@ main{
     padding:3em 0;
 }
 #chatHistory > section{
-    width:100%;
+    width:90%;
     height:60px;
-    margin:0;
+    margin:0 auto;
 }
 #chatHistory > section img{
     width:60px;
-    height:60px;
-    object-fit: contain;
+    height:40px;
+    object-fit: cover;
 }

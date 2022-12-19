@@ -1,4 +1,4 @@
 :root{
-    --header-primary-background-color:#e6ffe5;
+    --header-primary-background-color:linear-gradient(45deg, #aa5d84,#5f2a59);
     --header-secondary-background-color:#ff5000;
 }

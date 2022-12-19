@@ -57,10 +57,10 @@ const chatHistory = ()=>{
         let tempPost = "";
         res.map((data)=>{
             tempPost += `
-            <section class="row align-items-center border chatProfile" data-type="${data.username}" onclick="changeChatProfile(this)">
-            <img class="col-2 rounded" src="./src/images/users/${data.username}/profile/profile.png"/>
+            <section class="row align-items-center border-bottom chatProfile" data-type="${data.username}" onclick="changeChatProfile(this)">
+            <img class="col-2 rounded-circle" src="./src/images/users/${data.username}/profile/profile.png"/>
             <span class="col-4">${data.chatFrom}</span>  
-            <span class="col-5" style="font-size:0.8rem;">${data.time}</span>       
+            <span class="col-5 text-end" style="font-size:0.8rem;">${data.time}</span>       
             </section>
             `;
         })
