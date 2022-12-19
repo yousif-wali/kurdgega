@@ -3,6 +3,9 @@ session_start();
 require "./../include/database.php";
 if(!isset($_REQUEST['user'])){
     header("Location: ./Home");
+}else{
+    $addView = new Products();
+    $addView->addViews($_REQUEST['user']);
 }
 $_SESSION['visit'] = $_REQUEST['user'];
 ?>

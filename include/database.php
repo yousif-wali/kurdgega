@@ -159,6 +159,15 @@ class Products extends DB{
     public function deleteProduct($id){
         mysqli_query($this->getConnect(),"DELETE FROM products where Product_Id = '$id'");
     }
+    public function addViews($username){
+        $getUserID = mysqli_fetch_assoc(mysqli_query($this->getConnect(),"SELECT User_ID FROM shoppers WHERE username = '$username'"))["User_ID"];
+        $getView = mysqli_query($this->getConnect(), "SELECT views FROM products WHERE User_ID = '$getUserID'");
+        while($row = mysqli_fetch_assoc($getView)){
+            $view = $row['views'];
+            $view++;
+            mysqli_query($this->getConnect(), "UPDATE products SET views = '$view' WHERE User_ID = '$getUserID'");
+        }
+    }
 }
 /*  Post Activity   */
 class PostActivity extends DB{
