@@ -6,7 +6,7 @@
     height:100vh;
 }
 body{
-    overflow-x:hidden;
+    overflow:hidden;
 }
 aside{
     position:fixed;
@@ -27,7 +27,7 @@ main{
     right:0;
     width:63vw;
 }
-.msg form{
+.msg [data-type="form"]{
     display:grid;
     justify-content: center;
     align-items:center;
@@ -36,16 +36,48 @@ main{
 .msg input{
     height:100%;
 }
-.chats section{
-    display:flex;
-    height:40px;
+.chats > section{
     width:max-content;
     padding:0.25em 0.5em;
 }
-.from{
-    margin:20px 0;
+.froms, .tos{
+    margin-top:5px;
+    position:relative;
+    padding:2em 0;
+    display:grid;
+    grid-template-rows:1fr auto;
+}
+.from, .to{
+    cursor:pointer;
+}
+[data-type="message"]{
+    padding:0.3em 0.5em;
+}
+.tos{
+    margin-left:auto;
+    margin-right:20px;
 }
 .to{
-    margin:20px 0;
-    margin-left:auto;
+    text-align:right;
+}
+/*  Timing */
+.fromTime{
+    text-align:right;
+    font-size:0.7rem;
+}
+.toTime{
+    font-size:0.7rem;
+}
+#chats{
+    padding:3em 0;
+}
+#chatHistory > section{
+    width:100%;
+    height:60px;
+    margin:0;
+}
+#chatHistory > section img{
+    width:60px;
+    height:60px;
+    object-fit: contain;
 }

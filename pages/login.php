@@ -10,7 +10,7 @@
     </style>
 </head>
 <body>
-    <form action="./../include/validator.php" method="POST">
+    <form action="./include/validator.php" method="POST">
         <section>
             <input type="text" name="username" required>
             <label>Username/Email/Phone</label>

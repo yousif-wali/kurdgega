@@ -2,7 +2,7 @@
 session_start();
 require "./../include/database.php";
 if(!isset($_REQUEST['user'])){
-    header("Location: ./../index.php");
+    header("Location: ./Home");
 }
 $_SESSION['visit'] = $_REQUEST['user'];
 ?>
@@ -26,6 +26,10 @@ $_SESSION['visit'] = $_REQUEST['user'];
 <body>
     <?php include_once "./header.php";?>
     <main>
+       <?php 
+       echo "<script>var visiting = '".$_REQUEST['user']."'</script>";
+       ?>
+        <button class="btn btn-success" onclick="window.location = './include/validator.php?changeProfile='+visiting">Send Message</button>
         <section data-type="posts" style="width:40%; margin:0 auto;">
             <?php $_SESSION['posts'] = "visit"; include "./products.php";?>
         </section>

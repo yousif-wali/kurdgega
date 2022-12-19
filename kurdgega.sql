@@ -52,12 +52,14 @@ DROP TABLE IF EXISTS `chats`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `chats` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `chatFrom` int(11) NOT NULL,
-  `chatTo` int(11) NOT NULL,
+  `chatFrom` varchar(20) NOT NULL,
+  `chatTo` varchar(20) NOT NULL,
   `chatSent` timestamp NOT NULL DEFAULT current_timestamp(),
   `chatStatus` enum('read','sent','not sent') DEFAULT NULL,
+  `messages` longtext DEFAULT NULL,
+  `images` mediumtext DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,6 +68,7 @@ CREATE TABLE `chats` (
 
 LOCK TABLES `chats` WRITE;
 /*!40000 ALTER TABLE `chats` DISABLE KEYS */;
+INSERT INTO `chats` VALUES (1,'bastory','buhar04','2022-12-18 21:36:49',NULL,'Hello there',NULL),(2,'buhar04','bastory','2022-12-18 22:14:44',NULL,'Hello there',NULL),(3,'bastory','buhar04','2022-12-18 22:14:45',NULL,'Hello there',NULL),(5,'bastory','buhar04','2022-12-18 23:04:20',NULL,'another message',NULL),(14,'bastory','bastory01','2022-12-19 01:14:24',NULL,'Testing',NULL);
 /*!40000 ALTER TABLE `chats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,7 +89,8 @@ CREATE TABLE `postactivity` (
   `share` int(11) NOT NULL,
   PRIMARY KEY (`PostID`),
   KEY `PostActivity_Product_ID_Products_Product_ID` (`Product_ID`),
-  KEY `PostActivity_username_Shoppers_username` (`username`)
+  KEY `postactivity_username_shoppers_username` (`username`),
+  CONSTRAINT `postactivity_username_shoppers_username` FOREIGN KEY (`username`) REFERENCES `shoppers` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -96,7 +100,7 @@ CREATE TABLE `postactivity` (
 
 LOCK TABLES `postactivity` WRITE;
 /*!40000 ALTER TABLE `postactivity` DISABLE KEYS */;
-INSERT INTO `postactivity` VALUES (1,0,'bastory',1,'','2022-12-17 11:10:35',0);
+INSERT INTO `postactivity` VALUES (1,0,'buhar04',0,'','2022-12-17 22:06:18',0),(2,0,'bastory',1,'','2022-12-18 12:18:54',0),(3,1,'bastory',1,'','2022-12-18 12:34:42',0);
 /*!40000 ALTER TABLE `postactivity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,7 +137,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (0,0,'This is a title','hello',544,'OIP (2).jpg,','2022-12-17 10:42:58','2022-12-31 10:42:58',0,'Home','90s',1950,'new');
+INSERT INTO `products` VALUES (0,1,'This is a title','this is a long description',299.99,'5c46899429255fde092c1f26fefbb891.jpg,OIP (2).jpg,','2022-12-17 21:26:37','2022-12-31 21:26:37',0,'Home','90s',1950,'new'),(1,2,'This is a title','',0,'data-databases.png,','2022-12-17 22:01:48','2022-12-31 22:01:48',0,'','',0,'new');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -184,7 +188,7 @@ CREATE TABLE `shoppers` (
   `country` varchar(200) NOT NULL,
   `vip` tinyint(1) DEFAULT 0,
   `profile` varchar(200) NOT NULL,
-  `signedup` date DEFAULT NULL,
+  `signedup` date DEFAULT current_timestamp(),
   PRIMARY KEY (`User_ID`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
@@ -197,7 +201,7 @@ CREATE TABLE `shoppers` (
 
 LOCK TABLES `shoppers` WRITE;
 /*!40000 ALTER TABLE `shoppers` DISABLE KEYS */;
-INSERT INTO `shoppers` VALUES (0,'yousif','wali','bastory','yousifrwali@gmail.com','$2y$15$wW4LCbyLZBQYOBMRa9gHEuMvgb.0Vl5Yc45m56G8zfiryW7gkcSRm','2022-12-03',0,'','2183036006','male','1236','2022-12-17 14:59:13',0,0,'moorhead','mn','usa',0,'','2022-12-17'),(1,'buhar','wali','buhar04','buharwali@gmail.com','$2y$15$DlQ3tEKhOdMmZUtYAaGTD.fLYh1JiXz8MK4t53ZBG2pQg6M.6yK/O','2022-12-03',0,'::1','2183036001','male','1236 Belsly','2022-12-17 14:33:27',0,0,'Moorhead','MN','usa',0,'','2022-12-14');
+INSERT INTO `shoppers` VALUES (1,'yousif','wali','bastory','yousifrwali@gmail.com','$2y$15$SG3v.k3Z8ArNZoTlWZjUteX/S0FoorIc4meZP00pfMWrqlpIpNL4y','2022-12-02',0,'::1','218-303-6006','male','123 11th st s','2022-12-18 18:29:02',0,0,'moorhead','mn','usa',0,'profile.png','2022-12-17'),(2,'buhar','wali','buhar04','buharwali@gmail.com','$2y$15$Jj4JONmbFqExXkSNySQmh.FW.l6yrkFbnVH1ZDG16Jg4dYjJ3Fefy','2022-12-02',0,'::1','2183036001','female','1236 Belsly','2022-12-17 21:57:39',0,0,'Moorhead','MN','United States',0,'profile.png','2022-12-17'),(3,'yousif','wali','bastory01','yousifrwali2@gmail.com','$2y$15$9xUdGlfGVIxmVzsEG27nveTjsr1O.QW9q5LOgjoIiQPDqn5Jmre1m','2022-12-03',0,'::1','218-303-6007','male','123 11th st s','2022-12-18 19:17:30',0,0,'moorhead','mn','usa',0,'profile.png','2022-12-18');
 /*!40000 ALTER TABLE `shoppers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -210,4 +214,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-17 15:49:21
+-- Dump completed on 2022-12-18 19:19:48

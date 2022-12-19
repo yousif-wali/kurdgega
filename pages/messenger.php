@@ -12,49 +12,23 @@
     <?php include "./header.php";?>
     <section data-role="layout" style="margin-top:60px;">
         <aside class="border">
-            <section class="profile">
-                <img src="#"/>
-                <span>Name</span>
+            <section class="profile" id="chatHistory">
             </section>
         </aside>
         <main>
-            <section class="chats">
-                <section class="from border">
-                    <section>
-                        <img src="#"/>
-                    </section>
-                    <section>
-                        Hello, How are you doing?
-                    </section>
-                </section>
-                <section class="from border">
-                    <section>
-                        <img src="#"/>
-                    </section>
-                    <section>
-                        Hello, How are you doing?
-                    </section>
-                </section>
-                <section class="to border">
-                    <section>
-                        Hello, How are you doing?
-                    </section>
-                </section>
-                <section class="from border">
-                    <section>
-                        <img src="#"/>
-                    </section>
-                    <section>
-                        Hello, How are you doing?
-                    </section>
-                </section>
+            <section class="chats" id="chats">                
             </section>
             <section class="msg">
-                <form>
-                    <input type="text" /><button class="btn btn-success">Send<i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-                </form>
+                <section data-type="form">
+                    <input type="text" data-role="sending" /><button class="btn btn-success" onclick="sendMessage()">Send<i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                </section>
             </section>
         </main>
     </section>
+    <?php
+    echo '<script>const userLoggedin = "'.$_SESSION['username'].'"; let messageTo = "'.$_SESSION['sendMessageTo'].'"</script>';
+    ?>
+    <script src="./src/script/messenger.js">
+    </script>
 </body>
 </html>

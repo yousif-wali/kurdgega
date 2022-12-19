@@ -214,3 +214,33 @@ class User extends DB{
         
     }
 }
+/*   Chats */
+class Chats extends DB{
+    public function sendChat($fromUser, $toUsername, $message){
+        mysqli_query($this->getConnect(), "INSERT INTO chats (chatFrom, chatTo, messages) VALUES ('$fromUser','$toUsername', '$message')");
+    }
+    public function retrieveMessages($username){
+        $list = [];
+        $i = 0;
+        $messages = mysqli_query($this->getConnect(), "SELECT * FROM chats WHERE chatFrom = '$username' OR chatTo = '$username' Order By chatSent ASC");
+        while($row = mysqli_fetch_assoc($messages)){
+            $list[$i] = [$row["chatFrom"], $row["chatTo"], $row["chatSent"], $row["chatStatus"], $row["messages"], $row["images"]];
+            $i++;
+        }
+        return $list;
+    }
+    public function chatHistory($username){
+        $list = [];
+        $query = mysqli_query($this->getConnect(), "SELECT DISTINCT * FROM chats WHERE chatTo = '$username' order by chatSent desc;");
+        $i = 0;
+        while($row = mysqli_fetch_assoc($query)){
+            $chf = $row["chatFrom"];
+            $names = mysqli_fetch_assoc(mysqli_query($this->getConnect(), "SELECT concat(fName, ' ',lName) as fullname from shoppers WHERE username = '$chf'"))["fullname"];
+            $time = $row["chatSent"];
+            //$latestMessage = mysqli_fetch_assoc(mysqli_query($this->getConnect(), "SELECT max(chatSent) as chatSent FROM chats WHERE chatFrom = '$username' "))["chatSent"];
+            $list[$i] = [$names, $time, $row["messages"], $chf];
+            $i++;
+        }
+        return $list;
+    }
+}

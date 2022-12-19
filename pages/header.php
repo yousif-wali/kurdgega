@@ -19,7 +19,7 @@
     }
 </style>
 <header data-role="header" class="d-flex flex-row justify-content-between align-items-center">
-    <section>
+    <section class="d-flex flex-row align-items-center justify-contents-between">
         <?php 
         if(isset($_SESSION['username'])){
             echo '
@@ -28,15 +28,25 @@
             </section>
             ';
         }
+        $current_file = $_SERVER["PHP_SELF"];
+        if(!preg_match_all("/index.php/i", $current_file)){
+            echo '<section class="btn btn-secondary ms-2" onclick="window.location = `./Home`">Home</section>';
+        }
         ?>
     </section>
     <section>
     </section>
     <section class="d-flex justify-content-between align-items-center">
-    <span cursor="pointer" class="btn btn-success" onclick="window.location = 'KurdMessenger'">
+    <?php
+    if(isset($_SESSION['username'])){
+    echo '
+    <span cursor="pointer" class="btn btn-success" onclick="window.location = `KurdMessenger`">
         <i class="fa fa-comment" aria-hidden="true"></i>
         KurdMessenger
-    </span>    
+    </span>  
+    ';
+    } 
+    ?>
     <section class="d-flex justify-content-between p-2 profile">
             <?php if(isset($_SESSION['username'])){
             echo '

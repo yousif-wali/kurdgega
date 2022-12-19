@@ -7,7 +7,7 @@ ob_start();
 if(isset($_POST['login'])){
     $login = new Login($_POST['username'], $_POST['password']);
     if($login->login() == "logged in"){
-        header("Location: ./Home");
+        header("Location: ./../Home");
     }else{
         header("Location: ./Login");
     }
@@ -55,7 +55,7 @@ if(isset($_POST['logout'])){
     session_start();
     session_unset();
     session_destroy();
-    header("Location: ./Home");
+    header("Location: ./../Home");
 }
 /*    Post Product  */
 if(isset($_POST['postProduct'])){
@@ -160,5 +160,44 @@ if(isset($_GET['profileSelected'])){
     $chosen = $_GET['profileSelected'];
     setcookie("profileSelected", $chosen , time() + 3600, "/");
 }
+//***********************************************
+// Sending a Message from KurdMessenger
+if(isset($_REQUEST["sendingMessage"])){
+    $status = array("status"=>"sent");
+    $chat = new Chats();
+    $message = mysqli_real_escape_string($chat->getConnect(), $_REQUEST["sendingMessage"]);
+    $chat->sendChat($_SESSION['username'],$_SESSION['sendMessageTo'], $message);
+    echo json_encode($status);
+}
+//  Retrieve Messages
+if(isset($_REQUEST['retrieveMessages'])){
+    $message = new Chats();
+    $list = $message->retrieveMessages($_SESSION['username']);
+    $result = array();
+    $i = 0;
+    foreach($list as $m){
+        $result[$i] = array("chatFrom"=>$m[0], "chatTo"=>$m[1], "time"=>$m[2], "status"=>$m[3], "message"=>$m[4], "images"=>$m[5]);
+        $i++;
+    }
+    echo json_encode($result);
+}
+//  chatHistory
+if(isset($_REQUEST['chatHistory'])){
+    $message = new Chats();
+    $list = $message->chatHistory($_SESSION['username']);
+    $result = array();
+    $i = 0;
+    foreach($list as $m){
+        $result[$i] = array("chatFrom"=>$m[0], "time"=>$m[1], "message"=>$m[2], "username"=>$m[3]);
+        $i++;
+    }
+    echo json_encode($result);
+}
+//  Change Profile chat
+if(isset($_REQUEST['changeProfile'])){
+    $_SESSION['sendMessageTo'] = $_REQUEST['changeProfile'];
+    header("Location: ./../KurdMessenger");
+}
+
 ob_flush();
 ?>
