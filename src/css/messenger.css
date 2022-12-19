@@ -90,13 +90,14 @@ main{
 }
 #chats{
     padding:3em 0;
+    height:100%;
 }
-#chatHistory > section{
+#chatHistory section{
     width:90%;
     height:60px;
     margin:0 auto;
 }
-#chatHistory > section img{
+#chatHistory section img{
     width:60px;
     height:40px;
     object-fit: cover;

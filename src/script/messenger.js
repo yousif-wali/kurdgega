@@ -13,6 +13,7 @@ const getMessages = ()=>{
             if(data.chatFrom == userLoggedin && data.chatTo == messageTo){
                 tempPost += `
                 <section class="tos">
+                <section >
                     <section class="border rounded position-relative" data-type="message">
                     ${data.message}
                     </section>
@@ -25,11 +26,13 @@ const getMessages = ()=>{
                         </span>
                     </section>
                 </section>
+                </section>
                 `;
             }
             if(data.chatFrom == messageTo){
                 tempPost += `
                 <section class="froms">
+                <section >
                 <section class="border rounded position-relative" data-type="message">
                     ${data.message}
                 </section>
@@ -41,6 +44,7 @@ const getMessages = ()=>{
                         ${data.time}
                     </span>
                 </section>
+            </section>
             </section>
                 `;
             }
@@ -87,7 +91,10 @@ const sendMessage = async()=>{
     sendingMessage.then((data)=>{
         //  function to show messages
         getMessages();
-        message = "";
+        setTimeout(function(){
+            message = "";
+            document.querySelector('input').value = "";
+        }, 200)
         window.scrollTo(0,document.body.scrollHeight);
     }).catch((data)=>{console.log(data)})
 }

@@ -16,7 +16,7 @@
             </section>
         </aside>
         <main class="position-relative">
-            <section class="chats" id="chats">                
+            <section class="chats d-flex flex-column justify-content-end" id="chats">                
             </section>
             <section class="msg">
                 <section data-type="form">
