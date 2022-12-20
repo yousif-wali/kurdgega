@@ -55,6 +55,7 @@ const likePost = (username, product, button, userloggedin)=>{
     }
 
 }
+// Remove Sliders from Carousel
 const removeSliders = ()=>{
   let indicator = document.querySelectorAll("[data-type='imagePost'] .carousel-indicators");
   for(i = 0; i < indicator.length; i++){
@@ -66,3 +67,67 @@ const removeSliders = ()=>{
   }
 }
 removeSliders();
+//  Show commentors
+const showCommentors = ()=>{
+  let commentHolder = document.querySelectorAll("[data-role='commendHolder']");
+  commentHolder.forEach((commentElement)=>{
+    fetch("./include/validator.php?showComments="+commentElement.getAttribute("data-post")).then(res=>res.json()).then(res=>{
+      let temp = "";
+      res.map((data)=>{
+        if(data.username != " " && data.username != "" && data.username != null && data.username != undefined){
+          temp += `
+          <section class="d-flex justify-content-between border-bottom m-3 pe-2">
+          
+          <section>
+            <section class="border p-1">
+              ${data.username}
+            </section>
+            <section style="text-indent:1em;">
+              ${data.comment}
+            </section>
+          </section>
+  
+  
+          <section>${data.time}</section>
+          </section>
+          `;
+        }else{
+          temp = `
+          <section>No Comments Yet...</section>
+          `;
+        }
+
+      })
+      commentElement.innerHTML = temp;
+    });
+  })
+}
+showCommentors();
+// update comment numbers
+const updateCommentNumbers = ()=>{
+  let posts = document.querySelectorAll("[data-type='commentNumbers']");
+  posts.forEach((elem)=>{
+    let postid = elem.getAttribute("data-post")
+    fetch("./include/validator.php?showCommentNumber="+postid).then(res=>res.json()).then(
+      res=>{
+        elem.innerHTML = res.total;
+      }
+    );
+  })
+}
+updateCommentNumbers();
+//    Comment to a post
+const commentToPost = (postId, element)=>{
+  let msg = element.parentNode.children[0].value
+  if(msg != ""){
+    fetch("./include/validator.php?sendComment="+msg+"&postId="+postId).then(res=>res.text()).then(
+      res=>{
+        updateCommentNumbers();
+        showCommentors();
+        setTimeout(()=>{
+          element.parentNode.children[0].value = "";
+        }, 300)
+      } 
+    )
+  }
+}

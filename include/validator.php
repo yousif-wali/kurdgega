@@ -198,6 +198,34 @@ if(isset($_REQUEST['changeProfile'])){
     $_SESSION['sendMessageTo'] = $_REQUEST['changeProfile'];
     header("Location: ./../KurdMessenger");
 }
-
+//  Send Comments
+if(isset($_REQUEST['sendComment'])){
+    $comment = new PostActivity();
+    $msg = mysqli_real_escape_string($comment->getConnect(),$_REQUEST['sendComment']);
+    $postId = mysqli_real_escape_string($comment->getConnect(),$_REQUEST['postId']);
+    if($msg != ' ' and $msg != ''){
+        $comment->sendComment($_SESSION['username'], $postId, $msg);
+    }
+}
+//  Show Comment Numbers
+if(isset($_REQUEST['showCommentNumber'])){
+    $total = new PostActivity();
+    $number = mysqli_real_escape_string($total->getConnect(), $_REQUEST['showCommentNumber']);
+    $result = array("total"=>$total->getCommentNumbers($number));
+    echo json_encode($result);
+}
+//  Show Comments
+if(isset($_REQUEST['showComments'])){
+    $comments = new PostActivity();
+    $postId = mysqli_real_escape_string($comments->getConnect(), $_REQUEST['showComments']);
+    $items = $comments->showComments($postId);
+    $result = array();
+    $c = 0;
+    foreach($items as $item){
+        $result[$c] = array("username"=>$item[0], "comment"=>$item[1], "time"=>$item[2]);
+        $c++;
+    }
+    echo json_encode($result);
+}
 ob_flush();
 ?>

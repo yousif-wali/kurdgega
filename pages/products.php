@@ -21,8 +21,17 @@
             width:100%!important;
         }
     }
+    .socialMedias i{
+        font-size:1.5rem;
+        cursor:pointer;
+    }
 </style>
 <?php
+/*
+for sharing on social media.
+use the domain name in the url down below. and use /SinglePost/po([0-9]+)st as post link
+https://www.facebook.com/sharer/sharer.php?u=url
+*/
 $products = new Products();
 switch($_SESSION["posts"]){
     case "all":
@@ -112,21 +121,36 @@ foreach($items as $item){
     $isuserliked = new PostActivity();
     $flag = $current_user? $isuserliked->isUserLiked($current_user, $product_id): 0;
     echo "<section>
+
+    <section style='display:none;' class='w-100 justify-content-around p-3 socialMedias bg-warning rounded bg-gradient' id='share$product_id'><i class='fab fa-facebook' style='color:#3b5998;' ></i><i class='fab fa-twitter' style='color:#55acee'></i><i class='fab fa-instagram' style='color:#3f729b;'></i><i class='fab fa-whatsapp' style='color:#43d854'></i><i class='fab fa-google' style='color:#dc4e41;'></i><i class='fab fa-telegram' style='color:#00405d;'></i></section>
+    
     <section class='btn-group border w-100'>
     <button data-role='posts' data-post='post$product_id' onclick='likePost(`$current_user`, `$product_id`, this, `$current_user`)' name='likeProduct' class='btn btn-dark d-flex justify-content-center align-items-center hover'><span class='pe-2'>0</span><i class='";
     if($flag > 0){
         echo "text-primary ";
     }
     echo"fas fa-thumbs-up'></i></button>
-    <span class='btn btn-dark d-flex justify-content-center align-items-center'><span class='pe-2'>0</span><i class='fa fa-comment' aria-hidden='true'></i></span>
-    <span class='btn btn-dark d-flex justify-content-center align-items-center'><span class='pe-2'>0</span><i class='fas fa-share'></i></span>
+    <span class='btn btn-dark d-flex justify-content-center align-items-center' data-bs-toggle='collapse' data-bs-target='#commentCollapse$product_id'><span class='pe-2' data-type='commentNumbers' data-post='$product_id'>0</span><i class='fa fa-comment' aria-hidden='true'></i></span>
+    <span class='btn btn-dark d-flex justify-content-center align-items-center' onclick='document.getElementById(`share$product_id`).classList.toggle(`d-flex`)'><span class='pe-2'>0</span><i class='material-icons'>share</i></span>
 
     </section>
+    <section>
+    </section>
+<section data-type='comment-layout' >
+  <section class='collapse collapse-vertical' id='commentCollapse$product_id'>
+    <section class='card card-body' style='width: 100%; max-height:400px; overflow-y:scroll' data-role='commendHolder' data-post='$product_id'>
+      No Comments Yet...
+    </section>
+    <section class='d-flex flex-row'>
+    <input type='text' data-type='comment' data-post='$product_id' class='form-control' placeholder='Comment...'/><button class='btn btn-success' onclick='commentToPost($product_id, this)'>Send</button>
+    </section>
+  </section>
+</section>
     </section>";
     echo "</section>";
 }
 ?>
-<script src="src/script/index.js"></script>
+<script async src="src/script/index.js"></script>
 <script>
     carousel_inner = document.getElementsByClassName("carousel-inner");
     for(let i = 0; i < carousel_inner.length; i++){

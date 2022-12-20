@@ -171,27 +171,17 @@ class Products extends DB{
 }
 /*  Post Activity   */
 class PostActivity extends DB{
-    public function getHighestId(){
-        $this->connect();
-        $id = mysqli_fetch_assoc(mysqli_query($this->getConnect(), "SELECT max(PostID) + 1 as id FROM postactivity;"))["id"];
-        if($id == 0){
-            return 1;
-        }else{
-            return $id;
-        }
-    }
     public function likeProduct($username, $product_id){
-        $id = $this->getHighestId();
-        $likeExists = mysqli_query($this->getConnect(), "SELECT likes FROM postactivity WHERE Product_ID = '$product_id' AND username = '$username'");
+        $likeExists = mysqli_query($this->getConnect(), "SELECT likes FROM postactivity WHERE Product_ID = '$product_id' AND username = '$username' AND comment = '' and share = 0");
         
         if(mysqli_num_rows($likeExists) > 0){
-            mysqli_query($this->getConnect(),"UPDATE postactivity SET likes = 0 WHERE username='$username' AND Product_ID = '$product_id'");
+            mysqli_query($this->getConnect(),"UPDATE postactivity SET likes = 0 WHERE username='$username' AND Product_ID = '$product_id' and comment = '' and share = 0");
         }
         else{
-            mysqli_query($this->getConnect(),"INSERT INTO postactivity (PostID, Product_ID, username, likes) VALUES ('$id', '$product_id', '$username', 1)");
+            mysqli_query($this->getConnect(),"INSERT INTO postactivity (Product_ID, username, likes) VALUES ('$product_id', '$username', 1)");
         }
         if (mysqli_fetch_assoc($likeExists)["likes"] == 0){
-            mysqli_query($this->getConnect(),"UPDATE postactivity SET likes = 1 WHERE username='$username' AND Product_ID = '$product_id'");
+            mysqli_query($this->getConnect(),"UPDATE postactivity SET likes = 1 WHERE username='$username' AND Product_ID = '$product_id' and comment = '' and share = 0");
         }
     }
     public function updatePostLikes($id){
@@ -204,6 +194,24 @@ class PostActivity extends DB{
         }else{
             return 0;
         }
+    }
+    public function sendComment($username, $product_id, $msg){
+        mysqli_query($this->getConnect(), "INSERT INTO postactivity (username, Product_ID, comment) VALUES ('$username', '$product_id', '$msg')");
+    }
+    public function getCommentNumbers($post){
+        return mysqli_num_rows(mysqli_query($this->getConnect(), "SELECT comment FROM postactivity WHERE Product_ID = '$post' AND comment is not null"));
+    }
+    public function showComments($post){
+        $list = [];
+        $query = mysqli_query($this->getConnect(), "SELECT username, comment, commentDate from postactivity WHERE Product_ID = '$post' order by commentDate asc");
+        $i = 0;
+        while($row = mysqli_fetch_array($query)){
+            $user = $row['username'];
+            $names = mysqli_fetch_assoc(mysqli_query($this->getConnect(), "SELECT concat(fName, ' ',lName) as fullname from shoppers WHERE username = '$user'"))["fullname"];
+            $list[$i] = [$names, $row["comment"], $row["commentDate"]];
+            $i++;
+        }
+        return $list;
     }
 }
 /*   USERS          */
@@ -240,14 +248,15 @@ class Chats extends DB{
     }
     public function chatHistory($username){
         $list = [];
-        $query = mysqli_query($this->getConnect(), "SELECT DISTINCT * FROM chats WHERE chatTo = '$username' order by chatSent desc;");
+        $query = mysqli_query($this->getConnect(), "SELECT DISTINCT chatFrom FROM chats WHERE chatTo = '$username'");
         $i = 0;
         while($row = mysqli_fetch_assoc($query)){
-            $chf = $row["chatFrom"];
-            $names = mysqli_fetch_assoc(mysqli_query($this->getConnect(), "SELECT concat(fName, ' ',lName) as fullname from shoppers WHERE username = '$chf'"))["fullname"];
-            $time = $row["chatSent"];
+            $usernames = $row['chatFrom'];
+            $details = mysqli_fetch_assoc(mysqli_query($this->getConnect(), "SELECT max(chatSent) as chatSent, messages From chats where (chatFrom = '$usernames' and chatTo = '$username') OR (chatFrom = '$username' and chatTo = '$usernames')"));
+            $names = mysqli_fetch_assoc(mysqli_query($this->getConnect(), "SELECT concat(fName, ' ',lName) as fullname from shoppers WHERE username = '$usernames'"))["fullname"];
+            $time = $details["chatSent"];
             //$latestMessage = mysqli_fetch_assoc(mysqli_query($this->getConnect(), "SELECT max(chatSent) as chatSent FROM chats WHERE chatFrom = '$username' "))["chatSent"];
-            $list[$i] = [$names, $time, $row["messages"], $chf];
+            $list[$i] = [$names, $time, $details["messages"], $usernames];
             $i++;
         }
         return $list;
