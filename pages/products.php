@@ -46,6 +46,9 @@ switch($_SESSION["posts"]){
     case "Filter":
             $items = $products->Filter($_SESSION['category'], $_SESSION['model']);
         break;
+    case "Search":
+            $items = $products->Search(mysqli_real_escape_string($products->getConnect(), $_SESSION['search']));
+        break;
 }
 if(count($items) == 0){
     echo "<section>Sorry No Products Found...</section>";
@@ -62,7 +65,7 @@ if(count($items) == 0){
 foreach($items as $item){
     echo "<section class='border post p-2 mt-3 rounded position-relative'>";
     $product_id = $item[0];
-    if($_SESSION['posts'] == "Filter"){
+    if($_SESSION['posts'] == "Filter" || $_SESSION['posts'] == "Search"){
         $addViews = new Products();
         $addViews->addViewsToFilteredProduct($product_id);
     }

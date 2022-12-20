@@ -190,6 +190,18 @@ class Products extends DB{
             mysqli_query($this->getConnect(),"UPDATE products SET views = '$view' + 1 WHERE Product_ID = '$product_id'");
         }
     }
+    public function Search($search){
+        $list = [];
+        $i = 0;
+        $query = mysqli_query($this->getConnect(), "SELECT * FROM products WHERE title = '$search' or category = '$search' or model = '$search'");
+        while($row = mysqli_fetch_assoc($query)){
+            $id = $row["User_ID"];
+            $username = mysqli_fetch_assoc(mysqli_query($this->getConnect(),"SELECT username from shoppers WHERE User_ID = '$id'"))["username"];
+            $list[$i] = [$row["Product_ID"], $username, $row["title"],$row['description'], $row["price"], $row["images"], $row["publishedDate"], $row["views"], $row["category"], $row["model"], $row["year"], $row["conditions"]];
+            $i++;
+        }
+        return $list;
+    }
 }
 /*  Post Activity   */
 class PostActivity extends DB{

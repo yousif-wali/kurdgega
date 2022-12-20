@@ -9,3 +9,4 @@ RewriteRule ^Checking ./include/validator.php
 RewriteRule ^KurdMessenger ./pages/messenger.php
 RewriteRule ^SinglePost/po([0-9+])st ./pages/singlePost.php?post=$1
 RewriteRule ^Filter/([a-zA-Z]+)/([a-zA-Z]+) ./pages/filter.php?category=$1&model=$2
+RewriteRule ^Search/([a-zA-Z0-9]+) ./pages/search.php?search=$1

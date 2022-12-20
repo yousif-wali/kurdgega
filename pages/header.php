@@ -40,6 +40,12 @@
     <?php
     if(isset($_SESSION['username'])){
     echo '
+    <span>
+    <section class="form d-flex flex-row">
+    <input class="form-control" type="search" id="search"/>
+    <button class="material-icons btn btn-info me-1" onclick="search()">search</button>
+    </section>
+    </span>
     <span cursor="pointer" class="btn btn-success" onclick="window.location = `KurdMessenger`">
         <i class="fa fa-comment" aria-hidden="true"></i>
         KurdMessenger
@@ -76,3 +82,11 @@
         </section>
     </section>
 </header>
+<script>
+    const search = ()=>{
+        let searching = document.getElementById(`search`).value;
+        if(searching != ""){
+            window.location = `./Search/`+searching;
+        }
+    }
+</script>
