@@ -105,7 +105,7 @@ foreach($items as $item){
     </section>";
 
     echo "<section class='w-10 border ps-3 pe-3 fs-4 rounded-start'>$title</section>";
-    echo "<section class='float-end border ps-3 pe-3 rounded-bottom'>$publish</section>";
+    echo "<section class='float-end border ps-3 pe-3 rounded-bottom' data-change-time='simplify'>$publish</section>";
     echo "<section>$desc</section>";
     echo "<section>$$price</section>";
     echo "<section>

@@ -75,6 +75,34 @@ const showCommentors = ()=>{
       let temp = "";
       res.map((data)=>{
         if(data.username != " " && data.username != "" && data.username != null && data.username != undefined){
+          let lastTime = new Date(data.time);
+        let currentTime = new Date();
+        let diff = currentTime.getTime() - lastTime.getTime();
+        let result = diff / 1000;
+        let type = "seconds";
+        if(result > 60){ 
+            type = "minutes";
+        }if(result > 3600){
+            type = "hours";
+        }if(result > 3600 * 24){
+            type = "days";
+        }
+        switch(type){
+            case "minutes":
+                result /= 60;
+                break;
+                case "hours":
+                    result /= 3600;
+                    break;
+                    case "days":
+                        result /= 3600 * 24;
+                        break;
+                        
+                    }
+                    if(parseInt(result) == 1){
+        type = type.slice(0, -1)
+    }
+    result = parseInt(result);
           temp += `
           <section class="d-flex justify-content-between border-bottom m-3 pe-2">
           
@@ -88,7 +116,7 @@ const showCommentors = ()=>{
           </section>
   
   
-          <section>${data.time}</section>
+          <section>${result} ${type} ago</section>
           </section>
           `;
         }else{

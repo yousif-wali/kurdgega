@@ -10,6 +10,34 @@ const getMessages = ()=>{
         let chats = document.getElementById("chats");
         let tempPost = "";
         res.map((data)=>{
+            let lastTime = new Date(data.time);
+            let currentTime = new Date();
+            let diff = currentTime.getTime() - lastTime.getTime();
+            let result = diff / 1000;
+            let type = "seconds";
+            if(result > 60){ 
+                type = "minutes";
+            }if(result > 3600){
+                type = "hours";
+            }if(result > 3600 * 24){
+                type = "days";
+            }
+            switch(type){
+                case "minutes":
+                    result /= 60;
+                    break;
+                    case "hours":
+                        result /= 3600;
+                        break;
+                        case "days":
+                            result /= 3600 * 24;
+                            break;
+                            
+                        }
+                        if(parseInt(result) == 1){
+            type = type.slice(0, -1)
+        }
+        result = parseInt(result);
             if(data.chatFrom == userLoggedin && data.chatTo == messageTo){
                 tempPost += `
                 <section class="tos">
@@ -19,7 +47,7 @@ const getMessages = ()=>{
                     </section>
                     <section class="row">
                         <span class="toTime col-8">
-                        ${data.time}
+                        ${result} ${type} ago
                         </span>
                         <span class="to col-4" onclick="window.location = './Profile'">
                             ${userLoggedin}
@@ -41,7 +69,7 @@ const getMessages = ()=>{
                         ${messageTo}
                     </span>
                     <span class="fromTime col-8">
-                        ${data.time}
+                        ${result} ${type} ago
                     </span>
                 </section>
             </section>
@@ -60,11 +88,39 @@ const chatHistory = ()=>{
         let chats = document.getElementById("chatHistory");
         let tempPost = "";
         res.map((data)=>{
+            let lastTime = new Date(data.time);
+            let currentTime = new Date();
+            let diff = currentTime.getTime() - lastTime.getTime();
+            let result = diff / 1000;
+            let type = "seconds";
+            if(result > 60){ 
+                type = "minutes";
+            }if(result > 3600){
+                type = "hours";
+            }if(result > 3600 * 24){
+                type = "days";
+            }
+            switch(type){
+                case "minutes":
+                    result /= 60;
+                    break;
+                    case "hours":
+                        result /= 3600;
+                        break;
+                        case "days":
+                            result /= 3600 * 24;
+                            break;
+                            
+                        }
+                        if(parseInt(result) == 1){
+            type = type.slice(0, -1)
+        }
+        result = parseInt(result);
             tempPost += `
             <section class="row align-items-center border-bottom chatProfile" data-type="${data.username}" onclick="changeChatProfile(this)">
             <img class="col-2 rounded-circle" src="./src/images/users/${data.username}/profile/profile.png"/>
             <span class="col-4">${data.chatFrom}</span>  
-            <span class="col-5 text-end" style="font-size:0.8rem;">${data.time}</span>       
+            <span class="col-5 text-end" style="font-size:0.8rem;">${result} ${type} ago</span>       
             </section>
             `;
         })
