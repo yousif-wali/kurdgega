@@ -168,6 +168,28 @@ class Products extends DB{
             mysqli_query($this->getConnect(),"UPDATE products SET views = '$view' + 1 WHERE Product_ID = '$product_id'");
         }
     }
+    public function Filter($category, $model){
+        $category = mysqli_real_escape_string($this->getConnect(),$category);
+        $model = mysqli_real_escape_string($this->getConnect(), $model);
+        $list = [];
+        $i = 0;
+        $query = mysqli_query($this->getConnect(), "SELECT * FROM products WHERE category = '$category' AND model = '$model'");
+        while($row = mysqli_fetch_assoc($query)){
+            $id = $row["User_ID"];
+            $username = mysqli_fetch_assoc(mysqli_query($this->getConnect(),"SELECT username from shoppers WHERE User_ID = '$id'"))["username"];
+            $list[$i] = [$row["Product_ID"], $username, $row["title"],$row['description'], $row["price"], $row["images"], $row["publishedDate"], $row["views"], $row["category"], $row["model"], $row["year"], $row["conditions"]];
+            $i++;
+        }
+        return $list;
+    }
+    public function addViewsToFilteredProduct($product_id){
+        $query = mysqli_query($this->getConnect(),"SELECT * from products where Product_id = '$product_id'");
+        while($row = mysqli_fetch_assoc($query)){
+            $view = $row["views"];
+            $product_id = $row["Product_ID"];
+            mysqli_query($this->getConnect(),"UPDATE products SET views = '$view' + 1 WHERE Product_ID = '$product_id'");
+        }
+    }
 }
 /*  Post Activity   */
 class PostActivity extends DB{

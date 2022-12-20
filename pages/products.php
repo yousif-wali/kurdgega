@@ -43,10 +43,29 @@ switch($_SESSION["posts"]){
         case "visit":
             $items = $products->showProductsProfile($_SESSION['visit']);
         break;
+    case "Filter":
+            $items = $products->Filter($_SESSION['category'], $_SESSION['model']);
+        break;
+}
+if(count($items) == 0){
+    echo "<section>Sorry No Products Found...</section>";
+    echo "Searching for ".$_SESSION['category']." Category With ".$_SESSION['model']." Model";
+}else if($_SESSION['posts'] == "Filter"){
+    echo "<section>".count($items); 
+    if(count($items) == 1){
+       echo " Item ";
+    }else{
+        echo " Items ";
+    }
+    echo "Found <hr/></section>";
 }
 foreach($items as $item){
     echo "<section class='border post p-2 mt-3 rounded position-relative'>";
     $product_id = $item[0];
+    if($_SESSION['posts'] == "Filter"){
+        $addViews = new Products();
+        $addViews->addViewsToFilteredProduct($product_id);
+    }
     $username = $item[1];
     $title = $item[2];
     $desc = $item[3];
