@@ -151,6 +151,7 @@ foreach($items as $item){
 }
 ?>
 <script async src="src/script/index.js"></script>
+<script async src="src/script/main.js"></script>
 <script>
     carousel_inner = document.getElementsByClassName("carousel-inner");
     for(let i = 0; i < carousel_inner.length; i++){
