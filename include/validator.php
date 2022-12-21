@@ -76,16 +76,18 @@ if(isset($_POST['postProduct'])){
     $imageTmps = $_FILES['image']["tmp_name"];
     $imageSizes = $_FILES["image"]["size"];
     foreach($imageSizes as $size){
-        if($size > 2000000){
+        if($size > 2097152){
             $upload = 0;
+            setcookie("fileuploaderr", "size", time()+20, "/");
         }
     }
     foreach($extensions as $test){
-        if($test != "jpg" && $test != "jpeg" && $test != "png" && $test != "gif" && $test != "jfif"){
+        if($test != "jpg" && $test != "jpeg" && $test != "png" && $test != "gif" && $test != "jfif" && $test != "mp4" && $test != "mov" && $test != "avi" && $test != "webm" && $test != "flv"){
             $upload = 0;
+            setcookie("fileuploaderr", "filetype", time()+20, "/");
         }
     }
-    echo $upload;
+    
     if($upload == 1){
         $newProduct = new Products();
         $title = mysqli_real_escape_string($newProduct->getConnect(), $_POST['title']);
@@ -102,6 +104,8 @@ if(isset($_POST['postProduct'])){
             $c++;
         }
         setcookie("productpost", true, time()+15, "/");
+        header("Location: ./../Post");
+    }else{
         header("Location: ./../Post");
     }
 }

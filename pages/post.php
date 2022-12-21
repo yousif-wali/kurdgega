@@ -32,7 +32,16 @@
             <label for="price" class="form-label">Price</label>
         </section>
         <section>
-            <input id="image" type="file" name="image[]" accept="image/*" multiple class="form-control" placeholder="image.png" required/>
+            <input id="image" type="file" name="image[]" accept="image/*,video/*" multiple class="form-control <?php if(isset($_COOKIE["fileuploaderr"])){echo ' is-invalid';}?> " placeholder="image.png" required/>
+            <?php
+                        if(isset($_COOKIE["fileuploaderr"])){
+                            if($_COOKIE["fileuploaderr"] == "size"){
+                                echo '<section class=" invalid-feedback text-white bg-danger rounded mt-2 p-2 border">File is too big!</section>';
+                            }else{
+                                echo '<section class=" invalid-feedback text-white bg-danger rounded mt-2 p-2 border">File type is not supported!</section>';
+                            }
+                        }
+                ?>
         </section>
         <section class="row">
             <section class="col-6 form-floating">

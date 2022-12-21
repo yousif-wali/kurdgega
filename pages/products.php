@@ -2,7 +2,7 @@
     [data-type="imagePost"]{
         object-fit: cover;
     }
-    .carousel img{
+    .carousel img, .carousel video{
         width:100%;
         aspect-ratio:1/1;
     }
@@ -107,13 +107,22 @@ foreach($items as $item){
     <div class='carousel-inner'>
     ";
     foreach(explode(",", $images) as $image){
-        if($image != ""){
+        $active = true;
+        if($image != ""){        
+            echo "<div class='carousel-item'>";
+        if((preg_match("/.png/i", $image) || preg_match("/.jpeg/i", $image) || preg_match("/.jpg/i", $image) || preg_match("/.jfif/i", $image) || preg_match("/.gif/i", $image))){
             echo "
-            <div class='carousel-item'>
-            <img src='./src/images/users/$username/products/$image' class='d-block w-100' draggable='false'/>
-            </div>
+            <img loading='lazy' src='./src/images/users/$username/products/$image' class='d-block w-100' draggable='false'/>
+            ";
+        }else{
+            echo "
+            <video controls class='image-fluid' draggable='false' loading='lazy'>
+            <source src='./src/images/users/$username/products/$image' class='d-block w-100'/>
+            </video>
             ";
         }
+        echo "</div>";
+    }
     }
     echo "
     </div>
@@ -184,4 +193,20 @@ foreach($items as $item){
     const visit = (to) =>{
         window.location = "User/"+to;
     }
+    var videos = document.querySelectorAll('video');
+for(var i=0; i<videos.length; i++)
+   videos[i].addEventListener('play', function(){pauseAll(this)}, true);
+
+
+function pauseAll(elem){
+	for(var i=0; i<videos.length; i++){
+		//Is this the one we want to play?
+		if(videos[i] == elem) continue;
+		//Have we already played it && is it already paused?
+		if(videos[i].played.length > 0 && !videos[i].paused){
+		// Then pause it now
+		  videos[i].pause();
+		}
+	}
+  }
 </script>
