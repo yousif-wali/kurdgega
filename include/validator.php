@@ -140,7 +140,7 @@ if(isset($_POST['updateProfile'])){
     $extension = strtolower(pathinfo($file_name,PATHINFO_EXTENSION)); 
     if($extension != "jpg" && $extension != "jpeg" && $extension != "png" && $extension != "gif" && $extension != "jfif" && $file_name != null && $fileSize <= 2000000 ){
         setcookie("image", "false", time()+ 15, "/");
-        header("Location: ./Profile");
+        header("Location: ./../Profile");
     }else{
         $fileNull = $file_name == null ? null : $file_name;
         $user->updateProfile($_SESSION['username'], $fName, $lName, $phone, $address, $city, $state, $country);
@@ -151,7 +151,7 @@ if(isset($_POST['updateProfile'])){
             rename($file_tmp,"./../src/images/users/".$_SESSION["username"]."/profile/profile.png");
         }
         setcookie("profileInfo", "updated", time()+ 15, "/");
-        header("Location: ./Profile");
+        header("Location: ./../Profile");
     }
 
 }
