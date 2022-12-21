@@ -193,7 +193,7 @@ class Products extends DB{
     public function Search($search){
         $list = [];
         $i = 0;
-        $query = mysqli_query($this->getConnect(), "SELECT * FROM products WHERE title = '$search' or category = '$search' or model = '$search'");
+        $query = mysqli_query($this->getConnect(), "SELECT * FROM products WHERE title like '%$search%' or category like '%$search%' or model like '%$search%' or price like '%$search%' or conditions like '%$search%' or year like '%$search%' ");
         while($row = mysqli_fetch_assoc($query)){
             $id = $row["User_ID"];
             $username = mysqli_fetch_assoc(mysqli_query($this->getConnect(),"SELECT username from shoppers WHERE User_ID = '$id'"))["username"];
@@ -259,10 +259,19 @@ class User extends DB{
         }
         return $list;
     }
-    public function updateProfile($username, $fName, $lName, $phone, $address, $city, $state, $country){
-      
-    mysqli_query($this->getConnect(), "UPDATE shoppers SET fName = '$fName', lName = '$lName', phone = '$phone', address = '$address', city = '$city', state = '$state', country = '$country', profile = 'profile.png'  WHERE username='$username'");
-        
+    public function updateProfile($username, $fName, $lName, $phone, $address, $city, $state, $country){   
+    mysqli_query($this->getConnect(), "UPDATE shoppers SET fName = '$fName', lName = '$lName', phone = '$phone', address = '$address', city = '$city', state = '$state', country = '$country', profile = 'profile.png'  WHERE username='$username'");      
+    }
+    public function searchUser($search){
+        $list = [];
+        $query = mysqli_query($this->getConnect(), "SELECT * FROM shoppers WHERE username = '$search' or fName like '%$search%' or lName like '%$search%' ");
+        $i = 0;
+        while($row = mysqli_fetch_assoc($query)){
+            $fullname = $row["fName"]." ".$row["lName"];
+            $list[$i] = [$fullname, $row["username"]];
+            $i++;
+        }
+        return $list;
     }
 }
 /*   Chats */

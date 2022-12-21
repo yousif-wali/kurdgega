@@ -51,8 +51,10 @@ switch($_SESSION["posts"]){
         break;
 }
 if(count($items) == 0){
-    echo "<section>Sorry No Products Found...</section>";
-    echo "Searching for ".$_SESSION['category']." Category With ".$_SESSION['model']." Model";
+    echo "<section data-type='productNotFound'>Sorry No Products Found...<br/>";
+    if($_SESSION['posts'] == "Filter"){
+        echo "Searching for ".$_SESSION['category']." Category With ".$_SESSION['model']." Model</section>";
+    }
 }else if($_SESSION['posts'] == "Filter" || $_SESSION['posts'] == "Search"){
     echo "<section>".count($items); 
     if(count($items) == 1){
