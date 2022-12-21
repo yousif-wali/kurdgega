@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign up</title>
+    <?php include "./head.php";?>
+    <style>
+        @import "./src/css/root.css";
+    </style>
 </head>
 <body>
+    <?php include "./header.php";?>
+    <main style="margin-top:60px;">
     <form action="Checking" method="POST">
         <section>
             <input type="text" name="firstName" required/>
@@ -67,5 +70,6 @@
             <input type="submit" name="signup" value="Signup"/>
         </section>
     </form>
+    </main>
 </body>
 </html>
