@@ -31,8 +31,12 @@ $_SESSION['visit'] = $_REQUEST['user'];
     <main>
        <?php 
        echo "<script>var visiting = '".$_REQUEST['user']."'</script>";
+       if(isset($_SESSION['username']) && $_SESSION['username'] != $_REQUEST['user']){
+        echo '
+        <button class="btn btn-success" onclick="window.location = `./include/validator.php?changeProfile=`+visiting">Send Message</button> 
+        ';
+       }
        ?>
-        <button class="btn btn-success" onclick="window.location = './include/validator.php?changeProfile='+visiting">Send Message</button>
         <section data-type="posts" style="width:40%; margin:0 auto;">
             <?php $_SESSION['posts'] = "visit"; include "./products.php";?>
         </section>

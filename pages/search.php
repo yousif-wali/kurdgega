@@ -10,7 +10,9 @@
 <body>
     <?php include "./header.php"; $_SESSION['posts'] = "Search"; $_SESSION["search"] = $_REQUEST["search"];?>
     <main style="margin-top:60px;">
+    <section class="posts container" style="width:40%">
         <?php include "./products.php";?>
+</section>
     </main>
 </body>
 </html>

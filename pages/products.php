@@ -53,7 +53,7 @@ switch($_SESSION["posts"]){
 if(count($items) == 0){
     echo "<section>Sorry No Products Found...</section>";
     echo "Searching for ".$_SESSION['category']." Category With ".$_SESSION['model']." Model";
-}else if($_SESSION['posts'] == "Filter"){
+}else if($_SESSION['posts'] == "Filter" || $_SESSION['posts'] == "Search"){
     echo "<section>".count($items); 
     if(count($items) == 1){
        echo " Item ";

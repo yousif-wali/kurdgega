@@ -233,11 +233,11 @@ class PostActivity extends DB{
         mysqli_query($this->getConnect(), "INSERT INTO postactivity (username, Product_ID, comment) VALUES ('$username', '$product_id', '$msg')");
     }
     public function getCommentNumbers($post){
-        return mysqli_num_rows(mysqli_query($this->getConnect(), "SELECT comment FROM postactivity WHERE Product_ID = '$post' AND comment is not null"));
+        return mysqli_num_rows(mysqli_query($this->getConnect(), "SELECT comment FROM postactivity WHERE Product_ID = '$post' AND comment is not null and likes = 0"));
     }
     public function showComments($post){
         $list = [];
-        $query = mysqli_query($this->getConnect(), "SELECT username, comment, commentDate from postactivity WHERE Product_ID = '$post' order by commentDate asc");
+        $query = mysqli_query($this->getConnect(), "SELECT username, comment, commentDate from postactivity WHERE Product_ID = '$post' and likes = 0 order by commentDate asc");
         $i = 0;
         while($row = mysqli_fetch_array($query)){
             $user = $row['username'];
