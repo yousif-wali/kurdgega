@@ -24,13 +24,13 @@
         if(isset($_SESSION['username'])){
             echo '
             <section>
-            <button class="btn btn-secondary" onclick="window.location = `Post`">Create Post</button>
+            <button class="btn btn-secondary nonmobile" onclick="window.location = `Post`">دانانی بابەت</button>
             </section>
             ';
         }
         $current_file = $_SERVER["PHP_SELF"];
         if(!preg_match_all("/index.php/i", $current_file)){
-            echo '<section class="btn btn-secondary ms-2" onclick="window.location = `./Home`">Home</section>';
+            echo '<section class="btn btn-secondary ms-2 nonmobile" onclick="window.location = `./Home`">ماڵەوە</section>';
         }
         ?>
     </section>
@@ -38,7 +38,7 @@
     </section>
     <section class="d-flex justify-content-between align-items-center">
         <span>
-        <section class="form d-flex flex-row">
+        <section style="display:flex" class="form  flex-row nonmobile">
         <input class="form-control" type="search" id="search"/>
         <button class="material-icons btn btn-info me-1" onclick="search()">search</button>
         </section>
@@ -46,9 +46,9 @@
     <?php
     if(isset($_SESSION['username'])){
     echo '
-    <span cursor="pointer" class="btn btn-success" onclick="window.location = `KurdMessenger`">
+    <span cursor="pointer" class="btn btn-success nonmobile" onclick="window.location = `KurdMessenger`">
         <i class="fa fa-comment" aria-hidden="true"></i>
-        KurdMessenger
+        نامەبەری کورد
     </span>  
     ';
     } 
@@ -62,20 +62,20 @@
 
         <section class="dropdown-menu">
             <form action="./include/validator.php" method="post">
-            <button name="logout" class="dropdown-item">Log out</button>
+            <button name="logout" class="dropdown-item">چوونە دەرەوە</button>
             </form>
             <hr class="dropdown-divider">
-            <button class="dropdown-item" onclick="window.location=`Profile`">Profile</button>
+            <button class="dropdown-item" onclick="window.location=`Profile`">پەڕەی تایبەتی</button>
           </section>
             ';
         }else{echo '
             <button class="btn btn-primary me-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Profile
+                پەڕەی تایبەتی
               </button>
     
             <section class="dropdown-menu">               
-                <button class="dropdown-item" onclick="window.location=`Login`">Log In</button>
-                <button class="dropdown-item" onclick="window.location=`Signup`">Sign Up</button>            
+                <button class="dropdown-item" onclick="window.location=`Login`">چوونە ژوورەوە</button>
+                <button class="dropdown-item" onclick="window.location=`Signup`">تۆمارکردن</button>            
               </section>
                 ';
         }?>

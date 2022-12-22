@@ -163,4 +163,15 @@ const changeChatProfile = (elem)=>{
         changeProfile.send();
         getMessages();
         chatHistory();
+    if(window.innerWidth < 600){
+      document.querySelector('[data-role="layout"] aside').style.zIndex = 4;
+      document.querySelector('[data-role="layout"] main').style.zIndex = 5;
+    }
 }
+//      WARNING: FOR MOBILES ONLY
+const changeBackground = ()=>{
+    document.querySelector('[data-role="layout"] aside').style.zIndex = 5;
+      document.querySelector('[data-role="layout"] main').style.zIndex = 4;
+}
+//      Scroll Messages to bottom
+document.getElementById("chats").scrollTop = document.getElementById("chats").clientHeight;

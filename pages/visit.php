@@ -41,5 +41,6 @@ $_SESSION['visit'] = $_REQUEST['user'];
             <?php $_SESSION['posts'] = "visit"; include "./products.php";?>
         </section>
     </main>
+    <?php include "./mobileFooter.php";?>
 </body>
 </html>

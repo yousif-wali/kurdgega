@@ -147,7 +147,7 @@ class Products extends DB{
         $this->connect();
         $list = [];
         $i = 0;
-        $query = mysqli_query($this->getConnect(), "SELECT * FROM products");
+        $query = mysqli_query($this->getConnect(), "SELECT * FROM products order by publishedDate desc");
         while($row = mysqli_fetch_assoc($query)){
             $id = $row["User_ID"];
             $username = mysqli_fetch_assoc(mysqli_query($this->getConnect(),"SELECT username from shoppers WHERE User_ID = '$id'"))["username"];
@@ -173,7 +173,7 @@ class Products extends DB{
         $model = mysqli_real_escape_string($this->getConnect(), $model);
         $list = [];
         $i = 0;
-        $query = mysqli_query($this->getConnect(), "SELECT * FROM products WHERE category = '$category' AND model = '$model'");
+        $query = mysqli_query($this->getConnect(), "SELECT * FROM products WHERE category = '$category' AND model = '$model' order by publishedDate desc");
         while($row = mysqli_fetch_assoc($query)){
             $id = $row["User_ID"];
             $username = mysqli_fetch_assoc(mysqli_query($this->getConnect(),"SELECT username from shoppers WHERE User_ID = '$id'"))["username"];
@@ -193,7 +193,7 @@ class Products extends DB{
     public function Search($search){
         $list = [];
         $i = 0;
-        $query = mysqli_query($this->getConnect(), "SELECT * FROM products WHERE title like '%$search%' or category like '%$search%' or model like '%$search%' or price like '%$search%' or conditions like '%$search%' or year like '%$search%' ");
+        $query = mysqli_query($this->getConnect(), "SELECT * FROM products WHERE title like '%$search%' or category like '%$search%' or model like '%$search%' or price like '%$search%' or conditions like '%$search%' or year like '%$search%' order by publishedDate desc ");
         while($row = mysqli_fetch_assoc($query)){
             $id = $row["User_ID"];
             $username = mysqli_fetch_assoc(mysqli_query($this->getConnect(),"SELECT username from shoppers WHERE User_ID = '$id'"))["username"];

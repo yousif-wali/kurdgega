@@ -71,5 +71,6 @@
         </section>
     </form>
     </main>
+    <?php include "./mobileFooter.php";?>
 </body>
 </html>

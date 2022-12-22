@@ -11,11 +11,12 @@
 <body>
     <?php include "./header.php";?>
     <section data-role="layout" style="margin-top:60px;">
-        <aside>
+        <aside class="messenger">
             <section class="profile" id="chatHistory">
             </section>
         </aside>
-        <main class="position-relative">
+        <main class="position-relative d-flex flex-column pb-0 pe-0 justify-content-between" id="messengerMain">
+            <button class="material-icons btn btn-success" id="gobackMessenger" style="position:fixed; top:3em; left:1em; display:none; z-index:6" onclick="changeBackground()">reply</button>
             <section class="chats d-flex flex-column justify-content-end" id="chats">                
             </section>
             <section class="msg">
@@ -31,6 +32,6 @@
     ?>
     <script src="./src/script/messenger.js">
     </script>
-
+ <?php include "./mobileFooter.php";?>
 </body>
 </html>

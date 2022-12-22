@@ -51,5 +51,6 @@
             products.style.display = "none";
         }
     </script>
+     <?php include "./mobileFooter.php";?>
 </body>
 </html>

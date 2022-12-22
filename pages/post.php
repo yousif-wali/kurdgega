@@ -5,6 +5,7 @@
     <title>Post - <?php echo $_SESSION['username']?></title>
     <?php include "./head.php";?>
     <style>
+        @import "./src/css/root.css";
         body{
             height:100vh;
         }
@@ -18,18 +19,19 @@
     </style>
 </head>
 <body class="d-flex justify-content-center align-items-center">
+    <?php include "./header.php";?>
     <form action="./include/validator.php" method="POST" enctype="multipart/form-data">
         <section class="form-floating">
             <input id="title" type="text" name="title" class="form-control" placeholder="John" required/>
-            <label for="title" class="form-label">Title</label>
+            <label for="title" class="form-label">سەردێڕ</label>
         </section>
         <section  class="form-floating">
             <input id="desc" type="text" name="desc" class="form-control" placeholder="Doe" required/>
-            <label for="desc" class="form-label">Description</label>
+            <label for="desc" class="form-label">وەسف</label>
         </section>
         <section  class="form-floating">
             <input id="price" type="text" name="price" class="form-control" placeholder="$9.99" required/>
-            <label for="price" class="form-label">Price</label>
+            <label for="price" class="form-label">نرخ</label>
         </section>
         <section>
             <input id="image" type="file" name="image[]" accept="image/*,video/*" multiple class="form-control <?php if(isset($_COOKIE["fileuploaderr"])){echo ' is-invalid';}?> " placeholder="image.png" required/>
@@ -43,10 +45,10 @@
                         }
                 ?>
         </section>
-        <section class="row">
+        <section class="row" style="width:100%; margin-left:auto; margin-right:auto;">
             <section class="col-6 form-floating">
                 <select name="category" class="form-select" id='category' required>
-                    <option value="" default> Choose Category</option>
+                    <option value="" default> بەشێك هەلبژێرە</option>
                     <option value="Car">ئۆتۆمبیل</option>
                     <option value="Asset">موڵک</option>
                     <option value="Clothes">پۆشاك</option>
@@ -71,29 +73,29 @@
                 </select>
             </section>
         </section>
-        <section class="row">
+        <section class="row" style="width:100%; margin-left:auto; margin-right:auto;">
             <section class="col-6 form-floating">
                 <input id="year" type="number" name="year" min="1950" max="2023" step="1" class="form-control" placeholder="Year" required />
-                <label for="year" class="form-label">Year</label>
+                <label for="year" class="form-label">ساڵ</label>
             </section>
             <section class="col-6 d-flex align-items-center form-floating">
                 <select id="condition" name="condition" class="form-select" required>
-                    <option value="new">Condition - New</option>
-                    <option value="usednew">Condition - Used Like New</option>
-                    <option value="usedold">Condition - Used Old</option>
-                    <option value="old">Condition - Old</option>
+                    <option value="نوێ">حاڵەت - نوێ</option>
+                    <option value="بەکارهێنراوە و نوێیە">حاڵەت - بەکارهێنراوە و نوێە</option>
+                    <option value="بەکارهێنراوە و کۆنە">حاڵەت - بەکارهێنراوە و کۆنە</option>
+                    <option value="old">حاڵەت - کۆنە</option>
                 </select>
             </section>
         </section>
-        <button name="postProduct" class="btn btn-success">Post</button>
+        <button name="postProduct" class="btn btn-success">بەڵاوکردنەوە</button>
         <?php
         if(isset($_COOKIE["productpost"])){
             echo '<p class="text-success">The Post Was Succesfully Added!</p>';
         }
         ?>
     </form>
-    <section class="bg-success text-white p-2 rounded" style="position:fixed; bottom:1em; right:1em; cursor:pointer" onclick="window.location = './Home'">
-    Home
+    <section class="bg-success text-white p-2 rounded nonmobile" style="position:fixed; bottom:1em; right:1em; cursor:pointer" onclick="window.location = './Home'">
+    ماڵەوە
     </section>
     <script>
         document.getElementById('category').addEventListener("change", (elem)=>{
@@ -155,5 +157,6 @@
             }
         })
     </script>
+     <?php include "./mobileFooter.php";?>
 </body>
 </html>

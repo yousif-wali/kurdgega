@@ -17,5 +17,6 @@
             <?php $_SESSION['posts'] = "all"; include "./pages/products.php";?>
         </section>
     </main>
+    <?php include "./pages/mobileFooter.php";?>
 </body>
 </html>

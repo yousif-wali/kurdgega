@@ -1,0 +1,32 @@
+@media screen and (max-width: 38em){
+    .nonmobile{
+        display: none !important;;
+    }
+    .mobileFooter{
+        display:flex!important;
+    }
+    body{
+        padding-bottom:60px;
+    }
+    aside::after{
+        display:none!important;
+    }
+    [data-role="layout"] > *{
+        height: calc(100vh - 120px)!important;
+    }
+    [data-role="layout"] aside{
+        width:100vw!important;
+        z-index:4;
+    }
+    #messengerMain{
+        width:100vw!important;
+        z-index:2;
+        margin-left:0;
+    }
+    #gobackMessenger{
+        display: block !important;;
+    }
+    .msg{
+        bottom:60px;
+    }
+}

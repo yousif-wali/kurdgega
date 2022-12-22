@@ -113,5 +113,6 @@
     </main>
     <script src="./src/script/index.js"></script>
     <script src="./src/script/profile.js"></script>
+    <?php include "./mobileFooter.php";?>
 </body>
 </html>
