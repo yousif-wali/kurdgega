@@ -57,7 +57,7 @@
   <li class="nav-item">
   <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">کەلووپەل</a>
     <ul class="dropdown-menu">
-      <li><a class="dropdown-item text-end" href="./Filter/Items/House">کەلووپەلی ناو ماڵ</a></li>
+      <li><a class="dropdown-item text-end" href="./Filter/Items/HouseItems">کەلووپەلی ناو ماڵ</a></li>
       <li><a class="dropdown-item text-end" href="./Filter/Items/Livingroom">ژووری میوان</a></li>
       <li><a class="dropdown-item text-end" href="./Filter/Items/Kitchen">چێشتخانە</a></li>
       <li><a class="dropdown-item text-end" href="./Filter/Items/Bedroom">ژووری نووستن</a></li>

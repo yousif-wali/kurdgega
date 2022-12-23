@@ -11,10 +11,10 @@
     <?php include "./header.php"; $_SESSION['posts'] = "Search"; $_SESSION["search"] = $_REQUEST["search"];?>
     <main style="margin-top:60px;">
     <section class="posts container pb-3" style="width:40%">
-        <section>Users <section id='noUsers' style='display:none;'>Sorry... No users found</section><hr/></section>
+        <section dir="rtl">بەکارهێنەرەکان <section dir="rtl" id='noUsers' style='display:none;'>ببورە هییچ بەکار هێنەرێك نەدۆزرایەوە</section><hr/></section>
         <?php 
         $users = new User();
-        $items = $users->searchUser(mysqli_real_escape_string($users->getConnect(), $_REQUEST['search']));
+        $items = $users->searchUser(mysqli_real_escape_string($users->getConnect(), utf8_decode($_REQUEST['search'])));
         foreach($items as $item){
             $name = $item[0];
             $username = $item[1];

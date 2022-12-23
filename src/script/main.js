@@ -7,30 +7,45 @@ const timeConverter = ()=>{
         let currentTime = new Date();
         let diff = currentTime.getTime() - lastTime.getTime();
         let result = diff / 1000;
-        let type = "seconds";
+        let type = "سانیە";
         if(result > 60){ 
-            type = "minutes";
+            type = "دەقە";
         }if(result > 3600){
-            type = "hours";
+            type = "سەعات";
         }if(result > 3600 * 24){
-            type = "days";
+            type = "ڕۆژ";
+        }if(result > 3600 * 24 * 7){
+            type = "هەفتە";
+        }if(result > 3600 * 24 * 30){
+            type = "مانگ";
+        }if(result > 3600 * 24 * 30 * 12){
+            type = "ساڵ";
         }
         switch(type){
-            case "minutes":
+            case "دەقە":
                 result /= 60;
                 break;
-                case "hours":
+                case "سەعات":
                     result /= 3600;
                     break;
-                    case "days":
+                    case "ڕۆژ":
                         result /= 3600 * 24;
                         break;
-                        
+                        case "هەفتە":
+                            result /= 3600 * 24 * 7 
+                            break;
+                        case "مانگ":
+                            result /= 3600 * 24 * 30
+                            break;
+                        case "ساڵ":
+                            result /= 3600 * 24 * 30 * 12
+                            break;     
                     }
                     if(parseInt(result) == 1){
         type = type.slice(0, -1)
     }
-    element.innerHTML = parseInt(result) + " " + type + " ago";
+    element.innerHTML = "پێش " + parseInt(result) + " " + type ;
+    element.setAttribute("dir", "rtl");
     element.setAttribute("data-change-time", "simplified");
 })
 }

@@ -14,25 +14,39 @@ const getMessages = ()=>{
             let currentTime = new Date();
             let diff = currentTime.getTime() - lastTime.getTime();
             let result = diff / 1000;
-            let type = "seconds";
+            let type = "سانیە";
             if(result > 60){ 
-                type = "minutes";
+                type = "دەقە";
             }if(result > 3600){
-                type = "hours";
+                type = "سەعات";
             }if(result > 3600 * 24){
-                type = "days";
+                type = "ڕۆژ";
+            }if(result > 3600 * 24 * 7){
+                type = "هەفتە";
+            }if(result > 3600 * 24 * 30){
+                type = "مانگ";
+            }if(result > 3600 * 24 * 30 * 12){
+                type = "ساڵ";
             }
             switch(type){
-                case "minutes":
+                case "دەقە":
                     result /= 60;
                     break;
-                    case "hours":
+                    case "سەعات":
                         result /= 3600;
                         break;
-                        case "days":
+                        case "ڕۆژ":
                             result /= 3600 * 24;
                             break;
-                            
+                            case "هەفتە":
+                                result /= 3600 * 24 * 7 
+                                break;
+                            case "مانگ":
+                                result /= 3600 * 24 * 30
+                                break;
+                            case "ساڵ":
+                                result /= 3600 * 24 * 30 * 12
+                                break;  
                         }
                         if(parseInt(result) == 1){
             type = type.slice(0, -1)
@@ -46,8 +60,8 @@ const getMessages = ()=>{
                     ${data.message}
                     </section>
                     <section class="row">
-                        <span class="toTime col-8">
-                        ${result} ${type} ago
+                        <span dir="rtl" class="toTime col-8">
+                        پێش ${result} ${type}
                         </span>
                         <span class="to col-4" onclick="window.location = './Profile'">
                             ${userLoggedin}
@@ -68,8 +82,8 @@ const getMessages = ()=>{
                     <span class="from col-4" onclick="fromPage(this)">
                         ${messageTo}
                     </span>
-                    <span class="fromTime col-8">
-                        ${result} ${type} ago
+                    <span dir="rtl" class="fromTime col-8">
+                        پێش ${result} ${type}
                     </span>
                 </section>
             </section>
@@ -92,25 +106,40 @@ const chatHistory = ()=>{
             let currentTime = new Date();
             let diff = currentTime.getTime() - lastTime.getTime();
             let result = diff / 1000;
-            let type = "seconds";
+            let type = "سانیە";
             if(result > 60){ 
-                type = "minutes";
+                type = "دەقە";
             }if(result > 3600){
-                type = "hours";
+                type = "سەعات";
             }if(result > 3600 * 24){
-                type = "days";
+                type = "ڕۆژ";
+            }if(result > 3600 * 24 * 7){
+                type = "هەفتە";
+            }
+            if(result > 3600 * 24 * 30){
+                type = "مانگ";
+            }if(result > 3600 * 24 * 30 * 12){
+                type = "ساڵ";
             }
             switch(type){
-                case "minutes":
+                case "دەقە":
                     result /= 60;
                     break;
-                    case "hours":
+                    case "سەعات":
                         result /= 3600;
                         break;
-                        case "days":
+                        case "ڕۆژ":
                             result /= 3600 * 24;
-                            break;
-                            
+                            break;        
+                            case "هەفتە":
+                                result /= 3600 * 24 * 7 
+                                break;
+                            case "مانگ":
+                                result /= 3600 * 24 * 30
+                                break;
+                            case "ساڵ":
+                                result /= 3600 * 24 * 30 * 12
+                                break;
                         }
                         if(parseInt(result) == 1){
             type = type.slice(0, -1)
@@ -120,7 +149,7 @@ const chatHistory = ()=>{
             <section class="row align-items-center border-bottom chatProfile" data-type="${data.username}" onclick="changeChatProfile(this)">
             <img class="col-2 rounded-circle" src="./src/images/users/${data.username}/profile/profile.png"/>
             <span class="col-4">${data.chatFrom}</span>  
-            <span class="col-5 text-end" style="font-size:0.8rem;">${result} ${type} ago</span>       
+            <span dir='rtl' class="col-5 text-end" style="font-size:0.8rem;">پێش ${result} ${type}</span>       
             </section>
             `;
         })
@@ -175,3 +204,13 @@ const changeBackground = ()=>{
 }
 //      Scroll Messages to bottom
 document.getElementById("chats").scrollTop = document.getElementById("chats").clientHeight;
+
+//  Changing Text directions
+setTimeout(()=>{
+    let RTLmessages = document.querySelectorAll("[data-type='message']");
+    RTLmessages.forEach((elem)=>{
+      if(elem.innerHTML.replaceAll(" ", "").replace("\n", "").charCodeAt(0) > 127){
+          elem.setAttribute("dir", "rtl")
+      }
+    })
+},100)

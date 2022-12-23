@@ -133,11 +133,11 @@ class Products extends DB{
         $list = [];
         $i = 0;
         $userid = mysqli_fetch_assoc(mysqli_query($this->getConnect(), "SELECT * FROM shoppers WHERE username = '$username'"))["User_ID"];
-        $query = mysqli_query($this->getConnect(), "SELECT * FROM products WHERE User_ID = '$userid'");
+        $query = mysqli_query($this->getConnect(), "SELECT * FROM products WHERE User_ID = '$userid' order by publishedDate desc");
         while($row = mysqli_fetch_assoc($query)){
             $id = $row["User_ID"];
-            $username = mysqli_fetch_assoc(mysqli_query($this->getConnect(),"SELECT username from shoppers WHERE User_ID = '$id'"))["username"];
-            $list[$i] = [$row["Product_ID"], $username, $row["title"],$row['description'], $row["price"], $row["images"], $row["publishedDate"], $row["views"], $row["category"], $row["model"], $row["year"], $row["conditions"]];
+            $shopper = mysqli_fetch_assoc(mysqli_query($this->getConnect(),"SELECT * from shoppers WHERE User_ID = '$id'"));
+            $list[$i] = [$row["Product_ID"], $shopper['username'], $row["title"],$row['description'], $row["price"], $row["images"], $row["publishedDate"], $row["views"], $row["category"], $row["model"], $row["year"], $row["conditions"], $shopper["address"], $shopper["city"], $shopper["state"], $shopper['country']];
             $i++;
         }
         return $list;
@@ -150,8 +150,8 @@ class Products extends DB{
         $query = mysqli_query($this->getConnect(), "SELECT * FROM products order by publishedDate desc");
         while($row = mysqli_fetch_assoc($query)){
             $id = $row["User_ID"];
-            $username = mysqli_fetch_assoc(mysqli_query($this->getConnect(),"SELECT username from shoppers WHERE User_ID = '$id'"))["username"];
-            $list[$i] = [$row["Product_ID"], $username, $row["title"],$row['description'], $row["price"], $row["images"], $row["publishedDate"], $row["views"], $row["category"], $row["model"], $row["year"], $row["conditions"]];
+            $shopper = mysqli_fetch_assoc(mysqli_query($this->getConnect(),"SELECT * from shoppers WHERE User_ID = '$id'"));
+            $list[$i] = [$row["Product_ID"], $shopper["username"], $row["title"],$row['description'], $row["price"], $row["images"], $row["publishedDate"], $row["views"], $row["category"], $row["model"], $row["year"], $row["conditions"], $shopper["address"], $shopper["city"], $shopper["state"], $shopper['country']];
             $i++;
         }
         return $list;
@@ -176,8 +176,8 @@ class Products extends DB{
         $query = mysqli_query($this->getConnect(), "SELECT * FROM products WHERE category = '$category' AND model = '$model' order by publishedDate desc");
         while($row = mysqli_fetch_assoc($query)){
             $id = $row["User_ID"];
-            $username = mysqli_fetch_assoc(mysqli_query($this->getConnect(),"SELECT username from shoppers WHERE User_ID = '$id'"))["username"];
-            $list[$i] = [$row["Product_ID"], $username, $row["title"],$row['description'], $row["price"], $row["images"], $row["publishedDate"], $row["views"], $row["category"], $row["model"], $row["year"], $row["conditions"]];
+            $shopper = mysqli_fetch_assoc(mysqli_query($this->getConnect(),"SELECT * from shoppers WHERE User_ID = '$id'"));
+            $list[$i] = [$row["Product_ID"], $shopper['username'], $row["title"],$row['description'], $row["price"], $row["images"], $row["publishedDate"], $row["views"], $row["category"], $row["model"], $row["year"], $row["conditions"], $shopper["address"], $shopper["city"], $shopper["state"], $shopper['country']];
             $i++;
         }
         return $list;
@@ -196,8 +196,8 @@ class Products extends DB{
         $query = mysqli_query($this->getConnect(), "SELECT * FROM products WHERE title like '%$search%' or category like '%$search%' or model like '%$search%' or price like '%$search%' or conditions like '%$search%' or year like '%$search%' order by publishedDate desc ");
         while($row = mysqli_fetch_assoc($query)){
             $id = $row["User_ID"];
-            $username = mysqli_fetch_assoc(mysqli_query($this->getConnect(),"SELECT username from shoppers WHERE User_ID = '$id'"))["username"];
-            $list[$i] = [$row["Product_ID"], $username, $row["title"],$row['description'], $row["price"], $row["images"], $row["publishedDate"], $row["views"], $row["category"], $row["model"], $row["year"], $row["conditions"]];
+            $shopper = mysqli_fetch_assoc(mysqli_query($this->getConnect(),"SELECT * from shoppers WHERE User_ID = '$id'"));
+            $list[$i] = [$row["Product_ID"], $shopper["username"], $row["title"],$row['description'], $row["price"], $row["images"], $row["publishedDate"], $row["views"], $row["category"], $row["model"], $row["year"], $row["conditions"], $shopper["address"], $shopper["city"], $shopper["state"], $shopper['country']];
             $i++;
         }
         return $list;
@@ -291,7 +291,7 @@ class Chats extends DB{
     }
     public function chatHistory($username){
         $list = [];
-        $query = mysqli_query($this->getConnect(), "SELECT DISTINCT chatFrom FROM chats WHERE chatTo = '$username'");
+        $query = mysqli_query($this->getConnect(), "SELECT DISTINCT chatFrom FROM chats WHERE chatTo = '$username' order by chatSent desc");
         $i = 0;
         while($row = mysqli_fetch_assoc($query)){
             $usernames = $row['chatFrom'];

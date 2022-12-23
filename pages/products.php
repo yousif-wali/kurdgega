@@ -51,18 +51,13 @@ switch($_SESSION["posts"]){
         break;
 }
 if(count($items) == 0){
-    echo "<section data-type='productNotFound'>Sorry No Products Found...<br/>";
+    echo "<section dir='rtl' data-type='productNotFound'>ببورە هییچ کاڵایەت نە دۆزراییەوە<br/>";
     if($_SESSION['posts'] == "Filter"){
-        echo "Searching for ".$_SESSION['category']." Category With ".$_SESSION['model']." Model</section>";
+        echo "گەڕان بە دوای بەشی ".$_SESSION['category']." جۆری ".$_SESSION['model']."</section>";
     }
 }else if($_SESSION['posts'] == "Filter" || $_SESSION['posts'] == "Search"){
-    echo "<section>".count($items); 
-    if(count($items) == 1){
-       echo " Item ";
-    }else{
-        echo " Items ";
-    }
-    echo "Found <hr/></section>";
+    echo "<section dir='rtl'>".count($items); 
+    echo "کاڵا دۆزرایەوە. <hr/></section>";
 }
 foreach($items as $item){
     echo "<section class='border post p-2 mt-3 rounded position-relative'>";
@@ -82,6 +77,10 @@ foreach($items as $item){
     $model = $item[9];
     $year = $item[10];
     $condition = $item[11];
+    $address = $item[12];
+    $city = $item[13];
+    $state = $item[14];
+    $country = $item[15];
     $imageLength = Count(explode(",", $images)) - 1;
     echo "<section class='border-bottom position-relative p-1 d-flex justify-content-between align-items-center'>";
     if(isset($_SESSION['username']) && $_SESSION['username'] == $username){
@@ -139,15 +138,15 @@ foreach($items as $item){
 
     echo "<section class='w-10 border ps-3 pe-3 fs-4 rounded-start'>$title</section>";
     echo "<section class='float-end border ps-3 pe-3 rounded-bottom' data-change-time='simplify'>$publish</section>";
-    echo "<section>$desc</section>";
+    echo "<section class='desc'>$desc</section>";
     echo "<section>$$price</section>";
-    echo "<section>
-    <span><span>Category: </span><span>$category</span></span>
-    <span><span>Model: </span><span>$model</span></span>
-    <span><span>Year: </span><span>$year</span></span>
-    <span><span>Condition: </span><span>$condition</span></span>
+    echo "<section dir='rtl' class='d-flex flex-column'>
+    <span dir='rtl'><span>بەش: </span><span>$category</span>  <span>جۆر: </span><span>$model</span></span>
+    <span><span>ساڵ: </span><span>$year</span></span>
+    <span><span>حاڵەت: </span><span>$condition</span></span>
+    <span><span>ناوونیشان: </span><span>$address</span> <span>شار: </span><span>$city</span><span>پارێزگا: </span><span>$state</span><span>وڵات: </span><span>$country</span></span>
     </section>";
-    echo "<section><span>Views: </span><span>$views</span></section>";
+    echo "<section dir='rtl'><span>ژمارەی بینەر: </span><span>$views</span></section>";
     
     /*          Like / Comment / Share          */
     $current_user = isset($_SESSION["username"]) ? $_SESSION["username"] : null;
@@ -209,4 +208,10 @@ function pauseAll(elem){
 		}
 	}
   }
+  let descs = document.querySelectorAll(".desc");
+  descs.forEach((elem)=>{
+    if(elem.innerHTML.charCodeAt(0) > 127){
+        elem.setAttribute("dir", "rtl")
+    }
+  })
 </script>

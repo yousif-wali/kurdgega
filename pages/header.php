@@ -86,7 +86,7 @@
     const search = ()=>{
         let searching = document.getElementById(`search`).value;
         if(searching != ""){
-            window.location = `./Search/`+searching;
+            window.location = `./Search/`+  encodeURI( searching);
         }
     }
 </script>

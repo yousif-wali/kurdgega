@@ -33,7 +33,7 @@ $_SESSION['visit'] = $_REQUEST['user'];
        echo "<script>var visiting = '".$_REQUEST['user']."'</script>";
        if(isset($_SESSION['username']) && $_SESSION['username'] != $_REQUEST['user']){
         echo '
-        <button class="btn btn-success" onclick="window.location = `./include/validator.php?changeProfile=`+visiting">Send Message</button> 
+        <button class="btn btn-success" onclick="window.location = `./include/validator.php?changeProfile=`+visiting">نامە ناردن</button> 
         ';
        }
        ?>

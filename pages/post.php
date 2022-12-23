@@ -49,11 +49,11 @@
             <section class="col-6 form-floating">
                 <select name="category" class="form-select" id='category' required>
                     <option value="" default> بەشێك هەلبژێرە</option>
-                    <option value="Car">ئۆتۆمبیل</option>
-                    <option value="Asset">موڵک</option>
-                    <option value="Clothes">پۆشاك</option>
-                    <option value="Electronics">ئەلیکترۆنی</option>
-                    <option value="Items">کەلووپەل</option>
+                    <option value="ئۆتۆمبیل">ئۆتۆمبیل</option>
+                    <option value="موڵک">موڵک</option>
+                    <option value="پۆشاک">پۆشاك</option>
+                    <option value="ئەلیکترۆنی">ئەلیکترۆنی</option>
+                    <option value="کەلووپەل">کەلووپەل</option>
                 </select>
             </section>
             <section class="col-6 form-floating">
@@ -102,7 +102,7 @@
             let chosen = document.getElementById('category').value;
             let model = document.getElementById('model');
             switch(chosen){
-                case "Car":
+                case "ئۆتۆمبیل":
                     model.innerHTML = `                    <option value="BMW">BMW</option>
                     <option value="Ford">Ford</option>
                     <option value="GMC">GMC</option>
@@ -113,45 +113,45 @@
                     <option value="Lexus">Lexus</option>
                     <option value="Mitsubishi">Mitsubishi</option>
                     <option value="Toyota">Toyota</option>
-                    <option value="Others">Others</option>
+                    <option value="هیتر">هیتر</option>
 `;
                 break;
-                case "Asset":
+                case "موڵک":
                     model.innerHTML = `
-                    <option value="Land">زەوی</option>
-                    <option value="House">خانوو</option>
-                    <option value="Shop">دووکان</option>
-                    <option value="Others">هیتر</option>
+                    <option value="زەوی">زەوی</option>
+                    <option value="خانوو">خانوو</option>
+                    <option value="دووکان">دووکان</option>
+                    <option value="هیتر">هیتر</option>
 
 
                     `;
                 break;
-                case "Clothes":
+                case "پۆشاک":
                     model.innerHTML = `
-                    <option value="Men">پیاوان</option>
-                    <option value="Women">ئافرەتان</option>
-                    <option value="Children">مناڵان</option>
+                    <option value="پیاوان">پیاوان</option>
+                    <option value="ئافرەتان">ئافرەتان</option>
+                    <option value="مناڵان">مناڵان</option>
                     `;
                     break;
-                case "Electronics":
+                case "ئەلیکترۆنی":
                     model.innerHTML = `
-                    <option value="Mobile">موبایل</option>
-                    <option value="Laptop">لاپتۆپ</option>
-                    <option value="Smartwatch">کاتژمێری زیرەک</option>
-                    <option value="Tablet">تابلێت</option>
-                    <option value="Console">کۆنسۆل</option>
-                    <option value="Others">هیتر</option>
+                    <option value="موبایل">موبایل</option>
+                    <option value="لاپتۆپ">لاپتۆپ</option>
+                    <option value="کاتژمێری زیرەک">کاتژمێری زیرەک</option>
+                    <option value="تابلێت">تابلێت</option>
+                    <option value="کۆنسۆل">کۆنسۆل</option>
+                    <option value="هیتر">هیتر</option>
 
 
                     `;
                     break;
-                    case "Items":
+                    case "کەلووپەل":
                         model.innerHTML = `
-                        <option value="House">کەلووپەلی ناو ماڵ</option>
-                        <option value="Livingroom">ژووری میوان</option>
-                        <option value="Kitchen">چێشتخانە</option>
-                        <option value="Bedroom">ژووری نووستن</option>
-                        <option value="Others">دیکۆراتیتر</option>
+                        <option value="کەلووپەلی ناو ماڵ">کەلووپەلی ناو ماڵ</option>
+                        <option value="ژووری موان">ژووری میوان</option>
+                        <option value="چێشتخانە">چێشتخانە</option>
+                        <option value="ژووری نووستن">ژووری نووستن</option>
+                        <option value="دیکۆراتیتر">دیکۆراتیتر</option>
 
                         `;
             }
