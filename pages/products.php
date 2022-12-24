@@ -63,7 +63,7 @@ if(count($items) == 0){
     echo "کاڵا دۆزرایەوە. <hr/></section>";
 }
 foreach($items as $item){
-    echo "<section class='border post p-2 mt-3 rounded position-relative'>";
+    echo "<section class='border post p-2 mt-3 rounded position-relative overflow-hidden'>";
     $product_id = $item[0];
     if($_SESSION['posts'] == "Filter" || $_SESSION['posts'] == "Search"){
         $addViews = new Products();
@@ -147,7 +147,6 @@ foreach($items as $item){
     echo "<section class='w-10 border ps-3 pe-3 fs-4 rounded-start desc'>$title</section>";
     echo "<section class='float-end border ps-3 pe-3 rounded-bottom' data-change-time='simplify'>$publish</section>";
     echo "<section class='row'><section class='float-left col-2 border rounded-bottom' style='max-height:40px; text-align:center; line-height:20px;'>$$price</section><section class='desc col-10'>$desc</section></section>";
-    echo "";
     echo "<section dir='rtl' class='d-flex flex-column w-100'>
     <span dir='rtl' class='row'>
         <section class='col-6 border'>
