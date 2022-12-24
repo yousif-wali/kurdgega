@@ -48,9 +48,6 @@ const getMessages = ()=>{
                                 result /= 3600 * 24 * 30 * 12
                                 break;  
                         }
-                        if(parseInt(result) == 1){
-            type = type.slice(0, -1)
-        }
         result = parseInt(result);
             if(data.chatFrom == userLoggedin && data.chatTo == messageTo){
                 tempPost += `
@@ -141,9 +138,6 @@ const chatHistory = ()=>{
                                 result /= 3600 * 24 * 30 * 12
                                 break;
                         }
-                        if(parseInt(result) == 1){
-            type = type.slice(0, -1)
-        }
         result = parseInt(result);
             tempPost += `
             <section class="row align-items-center border-bottom chatProfile" data-type="${data.username}" onclick="changeChatProfile(this)">

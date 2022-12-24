@@ -90,7 +90,8 @@ main{
 }
 #chats{
     height:max-content;
-    padding:1em;
+    margin-top:60px;
+    padding:0 1em;
 }
 #chatHistory section{
     width:90%;

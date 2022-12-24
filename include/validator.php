@@ -147,14 +147,18 @@ if(isset($_POST['updateProfile'])){
         header("Location: ./../Profile");
     }else{
         $fileNull = $file_name == null ? null : $file_name;
-        $user->updateProfile($_SESSION['username'], $fName, $lName, $phone, $address, $city, $state, $country);
+        $uploaded = $user->updateProfile($_SESSION['username'], $fName, $lName, $phone, $address, $city, $state, $country);
         if($fileNull != null){
             if(!file_exists("./../src/images/users/".$_SESSION["username"]."/profile/")){
                 mkdir("./../src/images/users/".$_SESSION["username"]."/profile/");
             }
             rename($file_tmp,"./../src/images/users/".$_SESSION["username"]."/profile/profile.png");
         }
-        setcookie("profileInfo", "updated", time()+ 15, "/");
+        if($uploaded == false){
+            setcookie("phonenumber", "exists", time()+ 15, "/");
+        }else{
+            setcookie("profileInfo", "updated", time()+ 15, "/");
+        }
         header("Location: ./../Profile");
     }
 
@@ -230,6 +234,13 @@ if(isset($_REQUEST['showComments'])){
         $c++;
     }
     echo json_encode($result);
+}
+//  Send Report
+if(isset($_REQUEST['reportProductId'])){
+    $report = new Report();
+    $id = mysqli_real_escape_string($report->getConnect(), $_REQUEST['reportProductId']);
+    $msg = mysqli_real_escape_string($report->getConnect(), $_REQUEST['reportMessage']);
+    $report->sendReport($id, $msg);
 }
 ob_flush();
 ?>

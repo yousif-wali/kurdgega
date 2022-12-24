@@ -41,10 +41,7 @@ const timeConverter = ()=>{
                             result /= 3600 * 24 * 30 * 12
                             break;     
                     }
-                    if(parseInt(result) == 1){
-        type = type.slice(0, -1)
-    }
-    element.innerHTML = "پێش " + parseInt(result) + " " + type ;
+    element.innerHTML = "پێش " + parseInt(result) + " " + type;
     element.setAttribute("dir", "rtl");
     element.setAttribute("data-change-time", "simplified");
 })

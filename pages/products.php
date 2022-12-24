@@ -25,6 +25,9 @@
         font-size:1.5rem;
         cursor:pointer;
     }
+    [data-small-button='hidden'].dropdown-toggle::after{
+        display:none!important;
+    }
 </style>
 <?php
 /*
@@ -82,14 +85,19 @@ foreach($items as $item){
     $state = $item[14];
     $country = $item[15];
     $imageLength = Count(explode(",", $images)) - 1;
-    echo "<section class='border-bottom position-relative p-1 d-flex justify-content-between align-items-center'>";
+    echo "<section class='border-bottom position-relative p-1 d-flex justify-content-between align-items-center'>
+    <section class='d-flex'>
+    <section class='btn material-icons dropdown-toggle' data-small-button='hidden' data-bs-toggle='dropdown'>more_horiz</section>
+    <ul class='dropdown-menu'>
+    <li><a class='dropdown-item text-end' href='#' onclick='sendReport($product_id)'>ڕاپۆرت</a></li>
+    ";
     if(isset($_SESSION['username']) && $_SESSION['username'] == $username){
         echo "
-        <section class=''><button name='removePost' class='btn btn-danger float-left' onclick='deletePost($product_id)'>&times;</button></section>";
-    }else{
-        echo "<section></section>";
+        <li><a name='removePost' class='dropdown-item text-end' onclick='deletePost($product_id)'>لابردن</a></li>";
     }
-    echo "
+    echo " 
+    </ul>
+    </section>
     <section onclick='visit(`$username`)' class='border ps-3 pe-3 rounded d-flex justify-content-between align-items-center' cursor='pointer'><img width='50' height='50' class='border rounded-circle m-2 user-profile' draggable='false' src='src/images/users/$username/profile/profile.png'/>$username</section>
     </section>
     ";
@@ -136,15 +144,48 @@ foreach($items as $item){
     </div>
     </section>";
 
-    echo "<section class='w-10 border ps-3 pe-3 fs-4 rounded-start'>$title</section>";
+    echo "<section class='w-10 border ps-3 pe-3 fs-4 rounded-start desc'>$title</section>";
     echo "<section class='float-end border ps-3 pe-3 rounded-bottom' data-change-time='simplify'>$publish</section>";
-    echo "<section class='desc'>$desc</section>";
-    echo "<section>$$price</section>";
-    echo "<section dir='rtl' class='d-flex flex-column'>
-    <span dir='rtl'><span>بەش: </span><span>$category</span>  <span>جۆر: </span><span>$model</span></span>
-    <span><span>ساڵ: </span><span>$year</span></span>
-    <span><span>حاڵەت: </span><span>$condition</span></span>
-    <span><span>ناوونیشان: </span><span>$address</span> <span>شار: </span><span>$city</span><span>پارێزگا: </span><span>$state</span><span>وڵات: </span><span>$country</span></span>
+    echo "<section class='row'><section class='float-left col-2 border rounded-bottom' style='max-height:40px; text-align:center; line-height:20px;'>$$price</section><section class='desc col-10'>$desc</section></section>";
+    echo "";
+    echo "<section dir='rtl' class='d-flex flex-column w-100'>
+    <span dir='rtl' class='row'>
+        <section class='col-6 border'>
+            <span>بەش: </span><span>$category</span> 
+        </section>
+        <section class='col-6 border'>
+            <span>جۆر: </span><span>$model</span>   
+        </section>
+    </span>
+
+    <span class='row'>
+        <section class='col-6 border'>
+            <span><span>ساڵ: </span><span>$year</span></span>  
+        </section>
+        <section class='col-6 border'>
+            <span><span>حاڵەت: </span><span>$condition</span></span>
+        </section>
+    </span>
+
+
+    <span class='row'>
+        <section class='col-6 border'>
+            <span>ناوونیشان: </span><span>$address</span>
+        </section>
+        <section class='col-6 border'>
+            <span>شار: </span><span>$city</span>
+        </section>
+    </span>
+
+    <span class='row'>
+        <section class='col-6 border'>
+            <span>پارێزگا: </span><span>$state</span>
+        </section>
+        <section class='col-6 border'>
+            <span>وڵات: </span><span>$country</span>
+        </section>
+    </span>
+
     </section>";
     echo "<section dir='rtl'><span>ژمارەی بینەر: </span><span>$views</span></section>";
     
@@ -174,7 +215,7 @@ foreach($items as $item){
       No Comments Yet...
     </section>
     <section class='d-flex flex-row'>
-    <input type='text' data-type='comment' data-post='$product_id' class='form-control' placeholder='Comment...'/><button class='btn btn-success' onclick='commentToPost($product_id, this)'>Send</button>
+    <input type='text' data-type='comment' data-post='$product_id' class='form-control' placeholder='کۆمێنت'/><button class='btn btn-success' onclick='commentToPost($product_id, this)'>Send</button>
     </section>
   </section>
 </section>
@@ -211,7 +252,7 @@ function pauseAll(elem){
   let descs = document.querySelectorAll(".desc");
   descs.forEach((elem)=>{
     if(elem.innerHTML.charCodeAt(0) > 127){
-        elem.setAttribute("dir", "rtl")
+        elem.setAttribute("dir", "rtl");
     }
   })
 </script>

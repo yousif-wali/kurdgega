@@ -260,7 +260,13 @@ class User extends DB{
         return $list;
     }
     public function updateProfile($username, $fName, $lName, $phone, $address, $city, $state, $country){   
-    mysqli_query($this->getConnect(), "UPDATE shoppers SET fName = '$fName', lName = '$lName', phone = '$phone', address = '$address', city = '$city', state = '$state', country = '$country', profile = 'profile.png'  WHERE username='$username'");      
+    $checkIfMobileExists = mysqli_query($this->getConnect(), "SELECT * FROM shoppers WHERE phone = '$phone' and username != '$username' ");
+    if(mysqli_num_rows($checkIfMobileExists) > 0){
+        return false;
+    }else{
+        mysqli_query($this->getConnect(), "UPDATE shoppers SET fName = '$fName', lName = '$lName', phone = '$phone', address = '$address', city = '$city', state = '$state', country = '$country', profile = 'profile.png'  WHERE username='$username'");      
+        return true;
+    }
     }
     public function searchUser($search){
         $list = [];
@@ -303,5 +309,11 @@ class Chats extends DB{
             $i++;
         }
         return $list;
+    }
+}
+//      Reports
+class Report extends DB{
+    public function sendReport($product_id, $msg){
+        mysqli_query($this->getConnect(), "INSERT INTO report (Product_ID, commenting) values ('$product_id', '$msg')");
     }
 }

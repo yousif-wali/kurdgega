@@ -29,4 +29,7 @@
     .msg{
         bottom:60px;
     }
+    #chats{
+        margin-top:0!important; 
+    }
 }

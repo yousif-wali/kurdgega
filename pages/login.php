@@ -14,11 +14,11 @@
         <form action="./include/validator.php" method="POST">
             <section>
                 <input type="text" name="username" required>
-            <label>Username/Email/Phone</label>
+            <label>ژمارە تەلەفۆن/بەریدی ئەلیکترۆنی/ناوی بەکارهێنان</label>
         </section>
         <section>
             <input type="password" name="password" required>
-            <label>Password</label>
+            <label>ووشەی نهێنی</label>
         </section>
         <section>
             <input type="submit" value="Login" name="login"/>

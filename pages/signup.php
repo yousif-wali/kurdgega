@@ -13,58 +13,58 @@
     <form action="Checking" method="POST">
         <section>
             <input type="text" name="firstName" required/>
-            <label>First Name</label>
+            <label>ناوی یەکەم</label>
         </section>
         <section>
             <input type="text" name="lastName" required/>
-            <label>Last Name</label>
+            <label>ناوی کۆتا</label>
         </section>
         <section>
             <input type="text" name="username" required/>
-            <label>Username</label>
+            <label>ناوی بەکارهێنان</label>
         </section>
         <section>
             <input type="email" name="email" required/>
-            <label>Email</label>
+            <label>بەریدی ئەلیکترۆنی</label>
         </section>
         <section>
             <input type="password" name="password" required/>
-            <label>Password</label>
+            <label>ووشەی نهێنی</label>
         </section>
         <section>
             <input type="password" name="confirm_password" required/>
-            <label>Confirm Password</label>
+            <label>ووشەی نهێنی دووبارەکەرەوە</label>
         </section>
         <section>
             <input type="date" name="dob" required/>
-            <label>Date of Birth</label>
+            <label>ڕۆژی لەدایک بوون</label>
         </section>
         <section>
-            <input type="phone" name="phone" required/>
-            <label>Phone</label>
+            <input type="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required/>
+            <label>ژمارە</label>
         </section>
         <section>
             <select name="gender">
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
+                <option value="نێر">نێر</option>
+                <option value="مێ">مێ</option>
+                <option value="هیتر">هیتر</option>
             </select>
         </section>
         <section>
             <input type="text" name="address" required/>
-            <label>Address</label>
+            <label>ناوونیشان</label>
         </section>
         <section>
             <input type="text" name="city" required/>
-            <label>City</label>
+            <label>شار</label>
         </section>
         <section>
             <input type="text" name="state" required/>
-            <label>State</label>
+            <label>پارێزگا</label>
         </section>
         <section>
             <input type="text" name="country" required/>
-            <label>Country</label>
+            <label>وڵات</label>
         </section>
         <section>
             <input type="submit" name="signup" value="Signup"/>

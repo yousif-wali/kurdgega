@@ -59,7 +59,7 @@ CREATE TABLE `chats` (
   `messages` longtext DEFAULT NULL,
   `images` mediumtext DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +68,7 @@ CREATE TABLE `chats` (
 
 LOCK TABLES `chats` WRITE;
 /*!40000 ALTER TABLE `chats` DISABLE KEYS */;
-INSERT INTO `chats` VALUES (1,'bastory','buhar04','2022-12-18 21:36:49',NULL,'Hello there',NULL),(2,'buhar04','bastory','2022-12-18 22:14:44',NULL,'Hello there',NULL),(3,'bastory','buhar04','2022-12-18 22:14:45',NULL,'Hello there',NULL),(5,'bastory','buhar04','2022-12-18 23:04:20',NULL,'another message',NULL),(14,'bastory','bastory01','2022-12-19 01:14:24',NULL,'Testing',NULL);
+INSERT INTO `chats` VALUES (1,'bastory','buhar04','2022-12-18 21:36:49',NULL,'Hello there',NULL),(2,'buhar04','bastory','2022-12-18 22:14:44',NULL,'Hello there',NULL),(3,'bastory','buhar04','2022-12-18 22:14:45',NULL,'Hello there',NULL),(5,'bastory','buhar04','2022-12-18 23:04:20',NULL,'another message',NULL),(14,'bastory','bastory01','2022-12-19 01:14:24',NULL,'Testing',NULL),(15,'bastory01','bastory','2022-12-19 02:50:00',NULL,'your test was successful!',NULL),(16,'bastory','bastory01','2022-12-19 14:08:16',NULL,'hi',NULL),(17,'bastory','bastory01','2022-12-19 17:59:07',NULL,'Trying',NULL),(18,'bastory','bastory01','2022-12-19 18:00:29',NULL,'Clear',NULL),(19,'buhar04','bastory','2022-12-19 23:07:34',NULL,'Hello',NULL),(20,'bastory','buhar04','2022-12-21 14:27:42',NULL,'Hello',NULL),(21,'bastory','buhar04','2022-12-21 20:05:33',NULL,'Slaw',NULL),(22,'bastory','buhar04','2022-12-22 21:10:49',NULL,'Hello',NULL),(23,'bastory','buhar04','2022-12-22 21:13:11',NULL,'How are you',NULL),(24,'bastory','buhar04','2022-12-22 21:13:11',NULL,'How are you',NULL),(25,'bastory','buhar04','2022-12-23 20:38:06',NULL,'سلاو',NULL),(26,'bastory','bastory01','2022-12-23 20:38:29',NULL,'سلاو',NULL);
 /*!40000 ALTER TABLE `chats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,7 +80,7 @@ DROP TABLE IF EXISTS `postactivity`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `postactivity` (
-  `PostID` int(11) NOT NULL,
+  `PostID` int(11) NOT NULL AUTO_INCREMENT,
   `Product_ID` int(11) NOT NULL,
   `username` varchar(15) NOT NULL,
   `likes` tinyint(1) NOT NULL DEFAULT 0,
@@ -91,7 +91,7 @@ CREATE TABLE `postactivity` (
   KEY `PostActivity_Product_ID_Products_Product_ID` (`Product_ID`),
   KEY `postactivity_username_shoppers_username` (`username`),
   CONSTRAINT `postactivity_username_shoppers_username` FOREIGN KEY (`username`) REFERENCES `shoppers` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +100,7 @@ CREATE TABLE `postactivity` (
 
 LOCK TABLES `postactivity` WRITE;
 /*!40000 ALTER TABLE `postactivity` DISABLE KEYS */;
-INSERT INTO `postactivity` VALUES (1,0,'buhar04',0,'','2022-12-17 22:06:18',0),(2,0,'bastory',1,'','2022-12-18 12:18:54',0),(3,1,'bastory',1,'','2022-12-18 12:34:42',0);
+INSERT INTO `postactivity` VALUES (64,1,'bastory',0,'Testing','2022-12-19 18:16:40',0),(72,1,'bastory',1,'','2022-12-21 08:24:03',0),(73,1,'bastory',0,'This is a comment','2022-12-21 08:24:10',0),(80,1,'bastory',0,'This is another comment','2022-12-21 12:28:15',0),(83,3,'bastory',1,'','2022-12-23 12:39:52',0),(84,3,'bastory',0,'سڵاو','2022-12-23 12:40:00',0);
 /*!40000 ALTER TABLE `postactivity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,7 +114,7 @@ DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
   `Product_ID` int(11) NOT NULL,
   `User_ID` int(11) NOT NULL,
-  `title` text NOT NULL,
+  `title` longtext NOT NULL,
   `description` longtext NOT NULL,
   `price` double NOT NULL,
   `images` longtext NOT NULL,
@@ -137,7 +137,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (0,1,'This is a title','this is a long description',299.99,'5c46899429255fde092c1f26fefbb891.jpg,OIP (2).jpg,','2022-12-17 21:26:37','2022-12-31 21:26:37',0,'Home','90s',1950,'new'),(1,2,'This is a title','',0,'data-databases.png,','2022-12-17 22:01:48','2022-12-31 22:01:48',0,'','',0,'new');
+INSERT INTO `products` VALUES (1,2,'This is a title','this is description',199,'data-databases.png,','2022-12-17 22:01:48','2022-12-31 22:01:48',35,'ئەلیکترۆنی','موبایل',2013,'new'),(3,1,'تێست','تاقیکردنەوە',99,'5c46899429255fde092c1f26fefbb891.jpg,','2022-12-22 15:54:06','2023-01-05 15:54:06',53,'موڵک','زەوی',1999,'نوێ');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -159,6 +159,32 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `report`
+--
+
+DROP TABLE IF EXISTS `report`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `report` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Product_ID` int(11) NOT NULL,
+  `commenting` longtext NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Product_ID` (`Product_ID`),
+  CONSTRAINT `report_ibfk_1` FOREIGN KEY (`Product_ID`) REFERENCES `products` (`Product_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `report`
+--
+
+LOCK TABLES `report` WRITE;
+/*!40000 ALTER TABLE `report` DISABLE KEYS */;
+/*!40000 ALTER TABLE `report` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `shoppers`
@@ -189,6 +215,7 @@ CREATE TABLE `shoppers` (
   `vip` tinyint(1) DEFAULT 0,
   `profile` varchar(200) NOT NULL,
   `signedup` date DEFAULT current_timestamp(),
+  `authorized` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`User_ID`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
@@ -201,7 +228,7 @@ CREATE TABLE `shoppers` (
 
 LOCK TABLES `shoppers` WRITE;
 /*!40000 ALTER TABLE `shoppers` DISABLE KEYS */;
-INSERT INTO `shoppers` VALUES (1,'yousif','wali','bastory','yousifrwali@gmail.com','$2y$15$SG3v.k3Z8ArNZoTlWZjUteX/S0FoorIc4meZP00pfMWrqlpIpNL4y','2022-12-02',0,'::1','218-303-6006','male','123 11th st s','2022-12-18 18:29:02',0,0,'moorhead','mn','usa',0,'profile.png','2022-12-17'),(2,'buhar','wali','buhar04','buharwali@gmail.com','$2y$15$Jj4JONmbFqExXkSNySQmh.FW.l6yrkFbnVH1ZDG16Jg4dYjJ3Fefy','2022-12-02',0,'::1','2183036001','female','1236 Belsly','2022-12-17 21:57:39',0,0,'Moorhead','MN','United States',0,'profile.png','2022-12-17'),(3,'yousif','wali','bastory01','yousifrwali2@gmail.com','$2y$15$9xUdGlfGVIxmVzsEG27nveTjsr1O.QW9q5LOgjoIiQPDqn5Jmre1m','2022-12-03',0,'::1','218-303-6007','male','123 11th st s','2022-12-18 19:17:30',0,0,'moorhead','mn','usa',0,'profile.png','2022-12-18');
+INSERT INTO `shoppers` VALUES (1,'yousif','wali','bastory','yousifrwali@gmail.com','$2y$15$SG3v.k3Z8ArNZoTlWZjUteX/S0FoorIc4meZP00pfMWrqlpIpNL4y','2022-12-02',0,'::1','218-303-6006','male','123 11th st s','2022-12-23 22:45:24',0,0,'moorhead','mn','usa',0,'profile.png','2022-12-17',0),(2,'buhar','wali','buhar04','buharwali@gmail.com','$2y$15$Jj4JONmbFqExXkSNySQmh.FW.l6yrkFbnVH1ZDG16Jg4dYjJ3Fefy','2022-12-02',0,'::1','2183036001','female','1236 Belsly','2022-12-19 17:06:37',0,0,'Moorhead','MN','United States',0,'profile.png','2022-12-17',0),(3,'Ahmed','Karim','bastory01','yousifrwali2@gmail.com','$2y$15$9xUdGlfGVIxmVzsEG27nveTjsr1O.QW9q5LOgjoIiQPDqn5Jmre1m','2022-12-03',0,'::1','218-303-6007','male','123 11th st s','2022-12-19 08:08:44',0,0,'moorhead','mn','usa',0,'profile.png','2022-12-18',0);
 /*!40000 ALTER TABLE `shoppers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -214,4 +241,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-18 19:19:48
+-- Dump completed on 2022-12-23 22:47:34

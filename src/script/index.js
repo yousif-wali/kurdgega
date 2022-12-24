@@ -1,25 +1,58 @@
+//  Deleting Post
 const deletePost = (id)=>{
     Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        title: 'دڵنیاییت لە کردارەکەت؟',
+        text: "لە دووای رازیبوون، ناتوانیت کردارەکە پوچەڵ کەیتەوە",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        cancelButtonText: "نەخێر",
+        confirmButtonText: 'بەڵێ دڵنیام',
+        
       }).then((result) => {
         if (result.isConfirmed) {
           let request = new XMLHttpRequest();
           request.open("GET", "./include/validator.php?productDeleteId=" + id);
           request.send();
           Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
+            'رەشکرایەوە',
+            'بەڵاوکراوەکە بە سەرکەوتووی ڕەشکرایەوە!',
             'success'
           )
-          window.location.reload();
+          setTimeout(
+            ()=>{
+              window.location.reload();
+            },1000
+          )
         }
       })
+}
+// Sending a report
+const sendReport = (id)=>{
+  Swal.fire({
+    title: ':هۆکاری شکایەتەکەتمان پێبڵێ',
+    input: 'text',
+    inputAttributes: {
+      autocapitalize: 'off'
+    },
+    showCancelButton: true,
+    cancelButtonText: "پاشتگەستبوونەوە",
+    confirmButtonText: 'ناردن',
+    showLoaderOnConfirm: true,
+    allowOutsideClick: () => !Swal.isLoading()
+  }).then((result) => {
+    if (result.isConfirmed) {
+      console.log(result);
+      let sendData = new XMLHttpRequest();
+      sendData.open("GET", `./include/validator.php?reportProductId=${id}&reportMessage=${result.value}`);
+      sendData.send();
+      Swal.fire({
+        title: `زانیاریەکەت گەیشت`,
+        confirmButtonText: "زۆر باشە"
+      })
+    }
+  })
 }
 /*      Show Likes For Products */
 const showLikes = ()=>{
@@ -79,52 +112,66 @@ const showCommentors = ()=>{
         let currentTime = new Date();
         let diff = currentTime.getTime() - lastTime.getTime();
         let result = diff / 1000;
-        let type = "seconds";
+        let type = "سانیە";
         if(result > 60){ 
-            type = "minutes";
+            type = "دەقە";
         }if(result > 3600){
-            type = "hours";
+            type = "سەعات";
         }if(result > 3600 * 24){
-            type = "days";
-        }
+            type = "ڕۆژ";
+        }if(result > 3600 * 24 * 7){
+          type = "هەفتە";
+      }if(result > 3600 * 24 * 30){
+          type = "مانگ";
+      }if(result > 3600 * 24 * 30 * 12){
+          type = "ساڵ";
+      }
         switch(type){
-            case "minutes":
+            case "دەقە":
                 result /= 60;
                 break;
-                case "hours":
+                case "سەعات":
                     result /= 3600;
                     break;
-                    case "days":
+                    case "ڕۆژ":
                         result /= 3600 * 24;
                         break;
+                        case "هەفتە":
+                            result /= 3600 * 24 * 7 
+                            break;
+                        case "مانگ":
+                            result /= 3600 * 24 * 30
+                            break;
+                        case "ساڵ":
+                            result /= 3600 * 24 * 30 * 12
+                            break;    
                         
                     }
-                    if(parseInt(result) == 1){
-        type = type.slice(0, -1)
-    }
     result = parseInt(result);
           temp += `
-          <section class="d-flex justify-content-between border-bottom m-3 pe-2">
+          <section class="row justify-content-between border-bottom m-3 pe-2">
           
-          <section>
-            <section class="border p-1">
+            <section class="col-4 border p-1">
               ${data.username}
             </section>
-            <section style="text-indent:1em;">
+            <section class="col-8" dir="rtl">پێش ${result} ${type} </section>
+            <section class="col-12" style="text-indent:1em;" data-type="mesage">
               ${data.comment}
             </section>
-          </section>
-  
-  
-          <section>${result} ${type} ago</section>
           </section>
           `;
         }else{
           temp = `
-          <section>No Comments Yet...</section>
+          <section dir="rtl">هییچ کۆمێنتێك نیە...</section>
           `;
         }
 
+      })
+      let kurdishComments = document.querySelectorAll('[data-type="mesage"]');
+      kurdishComments.forEach((kurdish)=>{
+        if(kurdish.innerHTML.charCodeAt(0)){
+          kurdish.setAttribute("dir", "rtl")
+        }
       })
       commentElement.innerHTML = temp;
     });
